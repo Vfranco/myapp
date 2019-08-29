@@ -1,0 +1,1 @@
+var sigga = angular.module('sigga', ['ngRoute', 'ngAnimate']);
