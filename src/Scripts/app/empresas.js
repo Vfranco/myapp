@@ -28,7 +28,7 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
 
     var request = $http.post(baseurl + 'empresas/readbyuser', {uid : uid})
 
-    request.then(function(response){
+    request.then((response) => {
 
         if(response.data.status)
         {
@@ -54,7 +54,7 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
         var requestEmpleados = $http.post(baseurl + 'empleados/readbyempresa', { uid : uid });
         $scope.messageEmpleados = 'Verificando ...';
 
-        requestEmpleados.then(function(response){
+        requestEmpleados.then((response) => {
             
             if(response.data.status)
             {
@@ -106,7 +106,7 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
 
         var requestDetails = $http.post(baseurl + 'empleados/readbyid', { id_cms_empleado : idempleado });
 
-        requestDetails.then(function(response){
+        requestDetails.then((response) => {
             
             if(response.data.status)
             {
@@ -662,19 +662,37 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
 
                     $scope.increase++;
 
-                    var steps = {
-                        paso        : $scope.increase,
-                        modulo      : modulo,
-                        left        : true,
-                        executed    : true
+                    var getStep = $window.localStorage.getItem('paso');
+                    var steps = JSON.parse(getStep);
+
+                    if(steps == null)
+                    {
+                        var steps = {
+                            paso        : $scope.increase,
+                            modulo      : modulo,
+                            left        : true,
+                            executed    : true
+                        }
+    
+                        $scope.updateTipoRegistro({
+                            tiporegistro    : 1,
+                            entrypoint      : '#!/empresas',
+                            user            : uid
+                        });
+                    }
+                    else
+                    {
+                        if(steps.executed)
+                        {
+                            var steps = {
+                                paso        : $scope.increase,
+                                modulo      : modulo,
+                                left        : true,
+                                executed    : true
+                            }
+                        }
                     }
 
-                    $scope.updateTipoRegistro({
-                        tiporegistro    : 1,
-                        entrypoint      : '#!/empresas',
-                        user            : uid
-                    });
-            
                     $window.localStorage.setItem('paso', JSON.stringify(steps));
 
                 break;
@@ -1048,25 +1066,28 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
 
     $scope.getInSigga = function()
     {
-        var getFromStorage = $window.localStorage.getItem('paso');        
+        var getFromStorage = $window.localStorage.getItem('paso');
         var steps = JSON.parse(getFromStorage);
 
         switch(steps.modulo)
         {
-            case 'personal':
-                    $location.path('/empresas');
+            case 'mipersonal':
+                $window.location.reload();
+                $window.localStorage.removeItem('paso');
+                location.reload();
                 break;
 
             case 'visitantes':
                 $location.path('/visitantes');
+                $window.localStorage.removeItem('paso');
+                location.reload();
                 break;
 
             case 'proveedores':
                 $location.path('/proveedores');
+                $window.localStorage.removeItem('paso');
                 break;
-        }
-
-        $window.localStorage.removeItem('paso');
+        }        
     }
 
     $scope.goToSection = function()

@@ -15,8 +15,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <h5 class="card-title text-uppercase text-muted mb-0">Mi Unidad Residencial</h5>
-                        <span class="h2 font-weight-bold mb-0">Edificio Victoria Secret</span>
+                        <?php if(!Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario)): ?>
+                            <h5 class="card-title text-uppercase text-muted mb-0"><?php echo Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['tipo_control'];?></h5>
+                            <span class="h2 font-weight-bold mb-0"><?php echo Models\Usuario\ModelUsuario::ObtenerUnidadResidencial($id_sg_usuario)[0]['nombre_unidad']; ?></span>
+                        <?php else: ?>
+                            <h5 class="card-title text-uppercase text-muted mb-0"><?php echo Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['tipo_control'];?></h5>
+                            <span class="h2 font-weight-bold mb-0"><?php echo Models\Usuario\ModelUsuario::ObtenerEmpresa($id_sg_usuario)[0]['nombre_empresa']; ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="col-auto">
                         <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -25,8 +30,12 @@
                     </div>
                 </div>
                 <p class="mt-3 mb-0 text-sm">
-                    <span class="text-nowrap">Calle 25A # 12A - 15</span>
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Detalles</a>
+                    <?php if(!Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario)): ?>                        
+                        <a href="javascript:" class="btn btn-sm btn-primary">Editar Unidad</a>
+                        <a href="javascript:" class="btn btn-sm btn-primary">Crear Aptos</a>
+                    <?php else: ?>                        
+                        <a href="javascript:" class="btn btn-sm btn-primary" ng-click="openTorre()">Torres</a>                        
+                    <?php endif; ?>                    
                 </p>
             </div>
         </div>
@@ -37,8 +46,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <h5 class="card-title text-uppercase text-muted mb-0">Apartamentos</h5>
-                        <span class="h2 font-weight-bold mb-0">10</span>
+                        <h5 class="card-title text-uppercase text-muted mb-0"><?php echo Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['elementos'];?></h5>
+                        <span class="h2 font-weight-bold mb-0">{{ dataResource.length }}</span>
                     </div>
                     <div class="col-auto">
                         <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -47,8 +56,12 @@
                     </div>
                 </div>
                 <p class="mt-3 mb-0 text-sm">
-                    <span class="text-nowrap">Mas información click</span>
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Detalles</a>
+                    <?php if(Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['elementos'] == 'Apartamentos &oacute; Casas'):?>
+                        <a href="javascript:" class="btn btn-sm btn-primary">Ver Apartamentos</a>
+                        <a href="javascript:" class="btn btn-sm btn-primary">Ver Residentes</a>
+                    <?php else: ?>                        
+                        <a href="javascript:" class="btn btn-sm btn-primary">Ver Visitas</a>
+                    <?php endif; ?>
                 </p>
             </div>
         </div>
@@ -59,8 +72,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <h5 class="card-title text-uppercase text-muted mb-0">Entrdas/Salidas</h5>
-                        <span class="h2 font-weight-bold mb-0">10.000</span>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Entradas/Salidas</h5>
+                        <span class="h2 font-weight-bold mb-0">0</span>
                     </div>
                     <div class="col-auto">
                         <div class="icon icon-shape bg-gradient-default text-white rounded-circle shadow">
@@ -68,9 +81,8 @@
                         </div>
                     </div>
                 </div>
-                <p class="mt-3 mb-0 text-sm">
-                    <span class="text-nowrap">Mas información click</span>
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Detalles</a>
+                <p class="mt-3 mb-0 text-sm">                    
+                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Ver Actividad</a>
                 </p>
             </div>
         </div>
@@ -81,8 +93,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <h5 class="card-title text-uppercase text-muted mb-0">Mi Plan</h5>
-                        <span class="h2 font-weight-bold mb-0">{{ 650000 | currency }}</span>
+                        <h5 class="card-title text-uppercase text-muted mb-0"><?php echo Models\Usuario\ModelUsuario::ObtenerPlanByEmpresa($id_sg_usuario)[0]['nombre_plan']; ?></h5>
+                        <span class="h2 font-weight-bold mb-0">{{ <?php echo Models\Usuario\ModelUsuario::ObtenerPlanByEmpresa($id_sg_usuario)[0]['costo']; ?> | currency }}</span>
                     </div>
                     <div class="col-auto">
                         <div class="icon icon-shape bg-gradient-success text-white rounded-circle shadow">
@@ -92,7 +104,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-sm">
                     <span class="text-nowrap">Mas información click</span>
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Resumen</a>
+                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Planes</a>
                 </p>
             </div>
         </div>

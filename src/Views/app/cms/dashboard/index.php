@@ -1,6 +1,7 @@
 <?php Core\Views::addLayout('app.header'); ?>
 
 <body>
+    <?php if(!Models\Usuario\ModelUsuario::verificarEmpresas($id_sg_usuario) || !Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario) || !Models\Usuario\ModelUsuario::verificarProveedor($id_sg_usuario)):?>
     <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
         <div class="scrollbar-inner">
             <div class="sidenav-header d-flex align-items-center">
@@ -38,6 +39,7 @@
             </div>
         </div>
     </nav>
+    <?php endif; ?>
 
     <div class="main-content" id="panel">
         <nav class="navbar navbar-top navbar-expand navbar-dark bg-misvisitantes border-bottom padding-4">

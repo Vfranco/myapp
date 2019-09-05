@@ -15,6 +15,9 @@
   <?php Core\Html::app('lib/angularjs/angular-route');?>
   <?php Core\Html::app('lib/angularjs/angular-infinite-scroll');?>
   <?php Core\Html::app('lib/angularjs/angular-scroll.min');?>
+  <?php Core\Html::app('lib/rxjs/rx.all');?>
+  <?php Core\Html::app('lib/rxjs/rx.angular.min');?>
+  <?php Core\Html::app('lib/rxjs/rx.dom');?>
   <?php Core\Html::app('lib/moment/moment.min');?>
   <?php Core\Html::app('lib/moment/moment.locale.min');?>
   <script type="text/javascript" src="//unpkg.com/xlsx/dist/xlsx.full.min.js"></script>	
@@ -36,7 +39,7 @@
   <script type="text/javascript">
     /** Sigga 1.0 beta */
     var uid = '<?php echo (!isset($_SESSION['sigga:usr'])) ? '' : $_SESSION['sigga:usr']; ?>';
-    var baseurl = '<?php echo API_REST; ?>';
+    var baseurl = '<?php echo API_REST; ?>';        
     /** Sigga 1.0 beta */
     moment.locale('es');
   </script>

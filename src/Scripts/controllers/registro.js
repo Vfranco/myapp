@@ -41,6 +41,10 @@ sigga.controller('registro', ['$scope', '$http', 'Core', 'Form', function($scope
                     }
                 });
             }
+            else
+            {
+                $scope.btnRegister = true;
+            }
         }
     }
 
@@ -104,9 +108,10 @@ sigga.controller('registro', ['$scope', '$http', 'Core', 'Form', function($scope
             $scope.btnRegister = true;
             return 'Las contraseñas no coinciden';
         }
-
-        $scope.btnRegister = false;
-        return 'Bien, coinciden';
+        else if($scope.correo.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/))        
+            $scope.btnRegister = false;        
+        else                    
+            return 'Bien, coinciden';        
     }
 
     $scope.howStrongIsPassword = function()

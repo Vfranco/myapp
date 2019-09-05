@@ -3,7 +3,6 @@
 namespace Models\Usuario;
 
 use Core\Helper;
-use Database\Database;
 
 class ModelUsuario extends Helper
 {
@@ -47,9 +46,9 @@ class ModelUsuario extends Helper
         $getId = self::ObtenerPerfilUsuario($usuario);
 
         $routes = self::simpleQuery(
-            "replace(href_menu, '#!', '') as route, id_sg_estado as estado",
-            "sg_menu_usuarios",
-            "id_sg_usuario = '". $getId['id_sg_usuario'] ."' ORDER BY posicion_menu ASC"
+            "replace(sm.href_menu, '#!', '') AS route, sm.id_sg_estado AS estado, sr.id_sg_tipo_control AS tipo_control",
+            "`sg_registros` sr JOIN `sg_usuarios` su ON sr.`id_sg_registro` = su.`id_sg_registro` JOIN `sg_menu_usuarios` sm ON su.`id_sg_usuario` = sm.`id_sg_usuario`",
+            "su.id_sg_usuario = '". $getId['id_sg_usuario'] ."' ORDER BY posicion_menu ASC"
         );
 
         return $routes;
@@ -78,4 +77,64 @@ class ModelUsuario extends Helper
 
         return $getPlanUser;
     }
+
+    static function verificarEmpresas($user)
+    {
+        $empresa = Helper::simpleQuery('id_sg_empresa', 'sg_empresas', "id_sg_usuario = '". $user ."'");
+        
+        if(count($empresa) <= 0)
+            return true;
+
+        return false;
+    }
+
+    static function verificarUnidad($user)
+    {
+        $unidadResidencial = Helper::simpleQuery('id_sg_unidad_residencial', 'sg_unidad_residencial', "id_sg_usuario = '". $user ."'");
+        
+        if(count($unidadResidencial) <= 0)
+            return true;
+
+        return false;
+    }
+
+    static function verificarProveedor($user)
+    {
+        $proveedor = Helper::simpleQuery('id_sg_mi_proveedor', 'sg_mis_proveedores', "id_sg_usuario = '". $user ."'");
+        
+        if(count($proveedor) <= 0)
+            return true;
+
+        return false;
+    }
+
+    static function checkTipoControl($user)
+    {
+        $tipocontrol = Helper::simpleQuery(
+            'stc.tipo_control, stc.elementos, stc.id_sg_tipo_control', 
+            "sg_registros sr JOIN sg_usuarios su ON sr.`id_sg_registro` = su.`id_sg_registro` JOIN sg_tipo_control stc ON sr.`id_sg_tipo_control` = stc.id_sg_tipo_control",
+            "su.`id_sg_usuario` = '". $user ."'"
+        );
+
+        return $tipocontrol;
+    }
+
+    static function ObtenerUnidadResidencial($user)
+    {
+        return Helper::simpleQuery(
+            "*",
+            "sg_unidad_residencial",
+            "id_sg_usuario = '". $user ."'"
+        );
+    }
+
+    static function ObtenerEmpresa($user)
+    {
+        return Helper::simpleQuery(
+            "*",
+            "sg_empresas",
+            "id_sg_usuario = '". $user ."'"
+        );
+    }
+
 }

@@ -29,6 +29,7 @@
                     <img class="img-fluid" src="<?php echo BASE_URL; ?>Content/assets/img/sigga-logo-2.png" style="height: 191px;">
                     <p class="card-text mb-6">Gracias, por registrarte en <strong>Sigga</strong>, queremos darte las mejores y mas faciles opciones para la gestion de tu personal, proveedores y/o visitantes, te invitamos a escojer tu modulo de preferencia, dando click en el botón, <strong>Empezar!</strong>.</p>
                     <div class="row">
+                        <?php if(Models\Usuario\ModelUsuario::verificarEmpresas($id_sg_usuario)): ?>
                         <div class="col-lg-4 col-xs-12">
                             <div class="card card-pricing bg-gradient-info border-0 text-center mb-4">
                                 <div class="card-header bg-transparent">
@@ -42,6 +43,8 @@
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php if(Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario)): ?>
                         <div class="col-lg-4 col-xs-12">
                             <div class="card card-pricing bg-misvisitantes border-0 text-center mb-4">
                                 <div class="card-header bg-transparent">
@@ -55,6 +58,8 @@
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php if(Models\Usuario\ModelUsuario::verificarProveedor($id_sg_usuario)): ?>
                         <div class="col-lg-4 col-xs-12">
                             <div class="card card-pricing bg-gradient-warning border-0 text-center mb-4">
                                 <div class="card-header bg-transparent">
@@ -68,6 +73,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -181,7 +187,7 @@
                                                     <span class=" text-white">Muy bien sigamos adelante</span>
                                                 </div>
                                                 <div class="col-12">
-                                                    <button type="button" class="btn btn-primary mb-3 mt-5" ng-click="next()">Siguiente Paso</button>
+                                                    <button type="button" class="btn btn-primary mb-3 mt-5" ng-click="next('mipersonal')">Siguiente Paso</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -376,6 +382,14 @@
                                 'col'       => '',
                                 'value'     => "{{ uid }}"
                             ],
+                            'u'   => [
+                                'type'      => 'hidden',
+                                'name'      => 'tiporegistro',
+                                'css'       => '',
+                                'labelCss'  => '',
+                                'col'       => '',
+                                'value'     => "{{ tiporegistro }}"
+                            ],
                             'Nit de la Unidad'   => [
                                 'type'      => 'number',
                                 'name'      => 'nitUnidad',
@@ -396,6 +410,14 @@
                                 'css'       => 'form-control required',
                                 'labelCss'  => 'form-control-label',
                                 'col'       => 'col-sm-8'
+                            ],
+                            'Correo'   => [
+                                'type'      => 'email',
+                                'name'      => 'emailUnidad',
+                                'css'       => 'form-control required',
+                                'labelCss'  => 'form-control-label',
+                                'col'       => 'col-sm-8',
+                                'value'     => $email
                             ],
                             'Celular'   => [
                                 'type'      => 'number',
