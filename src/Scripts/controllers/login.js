@@ -4,6 +4,31 @@ sigga.controller('login', ['$scope', 'Core', 'Form', '$http', '$window', functio
     $scope.btnStatusLogin = false;
     $scope.messageError = '';
     $scope.btnStart = 'Ingresar';
+
+    $scope.checkStorage = function()
+    {
+        var route = $window.location.hash;
+
+        if(Core.isEmpty(route))
+        {            
+            var pasos = $window.localStorage.getItem('paso');
+
+            if(Core.isEmpty(pasos))
+                return false;
+            else
+            {
+                var steps = JSON.parse(pasos);
+                var promiseChangeTipoRegistro = $http.post(baseurl + 'usuarios/changetiporegistro', { user : steps.uid });
+
+                promiseChangeTipoRegistro.then((response) => {
+                    if(response.data.status)                
+                        $window.localStorage.removeItem('paso');
+                });
+            }
+        }
+    }
+
+    $scope.checkStorage();
     
     $scope.dologin = function()
     {

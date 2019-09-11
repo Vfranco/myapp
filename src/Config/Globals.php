@@ -10,18 +10,13 @@
  * App Title, Version, BaseUrl
  */
 define('APP_TITLE',     'Sigga');
-define('CMS_VERSION',   '1.0');
+define('CMS_VERSION',   '1.2');
 
 /**
  * BASE_URL - Local
  */
 define('BASE_URL', 'http://local.sigga.com/');
 define('API_REST', 'http://localapi.sigga.com/');
-
-/**
- * BASE_URL - Server
- */
-//define('BASE_URL', 'http://site.nomasplanillas.com/');
 
 /**
  * Action Verbs

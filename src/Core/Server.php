@@ -113,7 +113,7 @@ class Server
         else
         {
             if(isset($this->collection[1][2]))
-            $this->id = $this->collection[1][2];
+                $this->id = $this->collection[1][2];
 
             try{
                 $this->processRequest();

@@ -19,9 +19,7 @@
   <?php Core\Html::app('lib/rxjs/rx.angular.min');?>
   <?php Core\Html::app('lib/rxjs/rx.dom');?>
   <?php Core\Html::app('lib/moment/moment.min');?>
-  <?php Core\Html::app('lib/moment/moment.locale.min');?>
-  <script type="text/javascript" src="//unpkg.com/xlsx/dist/xlsx.full.min.js"></script>	
-  <script src="https://rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true&amp;skin=sunburst&amp;lang=css" defer></script>
+  <?php Core\Html::app('lib/moment/moment.locale.min');?>  
   <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">  
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
@@ -39,7 +37,8 @@
   <script type="text/javascript">
     /** Sigga 1.0 beta */
     var uid = '<?php echo (!isset($_SESSION['sigga:usr'])) ? '' : $_SESSION['sigga:usr']; ?>';
-    var baseurl = '<?php echo API_REST; ?>';        
+    var baseurl = '<?php echo API_REST; ?>';
+    var iduser = '' ;
     /** Sigga 1.0 beta */
     moment.locale('es');
   </script>

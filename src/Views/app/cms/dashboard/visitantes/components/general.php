@@ -34,7 +34,7 @@
                         <a href="javascript:" class="btn btn-sm btn-primary">Editar Unidad</a>
                         <a href="javascript:" class="btn btn-sm btn-primary">Crear Aptos</a>
                     <?php else: ?>                        
-                        <a href="javascript:" class="btn btn-sm btn-primary" ng-click="openTorre()">Torres</a>                        
+                        
                     <?php endif; ?>                    
                 </p>
             </div>

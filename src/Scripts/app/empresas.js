@@ -671,7 +671,8 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                             paso        : $scope.increase,
                             modulo      : modulo,
                             left        : true,
-                            executed    : true
+                            executed    : true,
+                            uid         : $scope.uid
                         }
     
                         $scope.updateTipoRegistro({
@@ -688,7 +689,8 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                                 paso        : $scope.increase,
                                 modulo      : modulo,
                                 left        : true,
-                                executed    : true
+                                executed    : true,
+                                uid         : $scope.uid
                             }
                         }
                     }
@@ -710,7 +712,8 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                             paso        : $scope.increase,
                             modulo      : modulo,
                             left        : true,
-                            executed    : true
+                            executed    : true,
+                            uid         : $scope.uid
                         }
                 
                         $scope.updateTipoRegistro({
@@ -733,7 +736,8 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                                         modulo      : modulo,
                                         left        : true,
                                         executed    : true,
-                                        tipo        : tipo
+                                        tipo        : tipo,
+                                        uid         : $scope.uid
                                     }
 
                                     $scope.updateTipoControl({
@@ -750,7 +754,8 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                                         modulo      : modulo,
                                         left        : true,
                                         executed    : true,
-                                        tipo        : tipo
+                                        tipo        : tipo,
+                                        uid         : $scope.uid
                                     }
 
                                     $scope.updateTipoControl({
@@ -775,14 +780,16 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                         paso        : $scope.increase,
                         modulo      : modulo,
                         left        : true,
-                        executed    : true
+                        executed    : true,
+                        uid         : $scope.uid
                     }
 
                     $scope.updateTipoRegistro({
                         tiporegistro    : 2,
                         entrypoint      : '#!/proveedores',
                         user            : uid,
-                        control         : 2
+                        control         : 2,
+                        uid             : $scope.uid
                     });
 
                     $window.localStorage.setItem('paso', JSON.stringify(steps));

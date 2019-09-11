@@ -2,15 +2,17 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col">                
-                <h5 class="h3 mb-0">Mis Oficinas</h5>                
+                <h5 class="h3 mb-0">Mis Oficinas</h5>
             </div>
-            <div class="col d-flex justify-content-center">                
-                <a href="javascript:" class="btn btn-sm btn-info" ng-hide="showCreateForm">Todos</a>
-                <a href="javascript:" class="btn btn-sm btn-primary" ng-hide="showCreateForm" ng-click="addOffice()">Añadir</a>
+            <div class="col d-flex justify-content-right">
+                <?php if(Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario)): ?>
+                    <a href="javascript:" class="btn btn-sm btn-primary ml-4" ng-click="openTorre()">Ver Torres</a>
+                    <a href="javascript:" class="btn btn-sm btn-primary" ng-hide="showCreateForm" ng-click="addOffice()">Añadir Oficina</a>
+                <?php endif; ?>                
             </div>
-        </div>
+        </div>        
     </div>
-    <div class="card-header py-0">
+    <div class="card-header py-0">        
         <form action="javascript:" method="post" autocomplete="off">
             <div class="form-group mb-0">
                 <div class="input-group input-group-lg input-group-flush">
@@ -26,6 +28,7 @@
     </div>
     <div class="card-body customScroll {{ setScroll(dataResource) }}" ng-class="{'removeScroll' : searchResource.length > 0}">
         <!-- List group -->
+        <div class="alert alert-{{typeAlert}} text-center" ng-if="muestraErrorOficina">{{ mensajeErrorOficina }}</div>
         <ul class="list-group list-group-flush list my--3">
             <li class="list-group-item px-0" ng-if="!loadDataResource">
                 <div class="row align-items-center">
@@ -72,7 +75,7 @@
                 <div class="row align-items-center" ng-class="{'bounce animated' : selectedIdResource == rows.id_sg_oficina}" ng-show="selectedIdResource == rows.id_sg_oficina">
                     <div class="col">
                         <div class="row alert alert-danger">
-                            <div class="col-12 text-center mb-2"><span class="text-sm">Estas seguro de eliminar este Empleado ?</span></div>
+                            <div class="col-12 text-center mb-2"><span class="text-sm">Estas seguro de eliminar esta Oficina ?</span></div>
                             <div class="col text-center">
                                 <button class="btn btn-sm btn-danger" ng-click="deleteProcessOficina(rows.id_sg_oficina)">Si, Borralo</button>
                             </div>
@@ -81,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>                 
             </li>
             <li ng-hide="searchResource.length == 0" ng-if="result.length == 0" class="list-group-item px-0 hover" ng-model="result">
                 <div class="row align-items-center">

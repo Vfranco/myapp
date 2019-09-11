@@ -15,6 +15,10 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
     $scope.panelTorre = false;
     $scope.enableFormTorre = false;
     $scope.muestraMensajeCarga = 'No hay datos que mostrar';
+    $scope.idOficina = 0;    
+    $scope.searchEmpleado = '';
+    $scope.searchTorre = '';
+    $scope.searchIntegrante = '';
 
     var promiseData = $http.post(baseurl + controller + 'readbyid', { uid: uid });
 
@@ -22,7 +26,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
         if (response.data.status)
         {
-            $scope.dataResource = response.data.rows;
+            $scope.dataResource = response.data.rows;            
             $scope.loadDataResource = true;
         }
         else
@@ -35,6 +39,34 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
         $scope.panelTorre = true;
         $scope.ocultaDetalleOficina = true;
         $scope.enableFormTorre = false;
+        $scope.ocultaDetalleOficina = true;
+        $scope.ocultaFormCreacionOficina = false;
+        $scope.integrantesOficina = [];
+    }
+
+    $scope.item = '';
+    $scope.piso = '';    
+    $scope.disableInputs = false;
+
+    $scope.changeFormTorre = function()
+    {
+        let textSelected = $('#idTorre option:selected').text()
+
+        if(textSelected == 'N/A')
+        {
+            $scope.piso = 'N/A';
+            $scope.disableInputs = true;
+        }
+        else
+        {
+            $scope.piso = '';            
+            $scope.disableInputs = false;
+
+            if($scope.item == 2)
+                $scope.enableFormTorre = true;
+            else
+                $scope.enableFormTorre = false;
+        }        
     }
 
     $scope.closeTorre = function()
@@ -43,14 +75,10 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
         $scope.ocultaDetalleOficina = false;
     }
 
-    $scope.formTorre = function()
-    {
-        $scope.enableFormTorre = true;
-    }
-
     $scope.cancelAddTorre = function()
     {
         $scope.enableFormTorre = false;
+        $scope.item = "";
     }
 
     $scope.createdTorre = false;
@@ -83,6 +111,8 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
                     $scope.muestraErrorTorre = true;
                     $scope.mensajeErrorTorre = response.data.message;
                     $scope.tipoMensaje = 'success';
+                    $scope.enableFormTorre = false;
+                    $scope.item = "";
                     $scope.readTorres();
                 }
             });
@@ -104,9 +134,26 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
             promiseObtenerTorres.then((response) => {
 
                 if(response.data.status)                
-                    $scope.dataTorres = response.data.rows;                
+                    $scope.dataTorres = response.data.rows;                    
             });
         }
+    }
+
+    $scope.readOficinas = function()
+    {
+        var promiseData = $http.post(baseurl + controller + 'readbyid', { uid: uid });
+
+        promiseData.then((response) => {
+
+            if (response.data.status)
+            {
+                $scope.dataResource = response.data.rows;            
+                $scope.loadDataResource = true;
+            }
+            else
+                $scope.loadDataResource = false;
+            
+        });
     }
 
     $scope.readTorres();
@@ -175,7 +222,8 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
     {
         $scope.ocultaDetalleOficina = false;
         $scope.ocultaFormCreacionOficina = false;
-        $scope.panelTorre = false;        
+        $scope.panelTorre = false;
+        $scope.listarIntegrantes = false;
 
         if(tipocontrol == '2')
         {
@@ -187,14 +235,20 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
                 
                 if(response.data.status)
                 {
+                    $scope.idOficina = response.data.rows[0].id_sg_oficina;
                     $scope.nombreTorre = response.data.rows[0].nombre_torre;
                     $scope.nombreOficina = response.data.rows[0].oficina;
                     $scope.pisoNivel = response.data.rows[0].piso_nivel;
                     $scope.area = response.data.rows[0].area;
                     $scope.integrantesOficina = response.data.integrantes;
                     $scope.resultResource = true;
-                }
 
+                    $scope.item = response.data.rows[0].id_sg_torre;
+                    $scope.piso = response.data.rows[0].piso_nivel;
+                    $scope.oficina = response.data.rows[0].oficina;
+                    $scope.area = response.data.rows[0].area;
+                }
+                
                 $scope.muestraMensajeCarga = 'No hay datos que mostrar';
             });            
         }        
@@ -202,12 +256,19 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
     $scope.ocultaDetalleOficina = false;
     $scope.ocultaFormCreacionOficina = false;
+    $scope.buttonCreateOficina = true;
 
     $scope.addOffice = function()
     {
+        $scope.buttonCreateOficina = true;
         $scope.ocultaDetalleOficina = true;
         $scope.ocultaFormCreacionOficina = true;
         $scope.panelTorre = false;
+
+        $scope.item = '';
+        $scope.piso = '';
+        $scope.oficina = '';
+        $scope.area = '';
     }
 
     $scope.oficinaMessage = '';
@@ -265,11 +326,25 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
     {
         $scope.recordCreated = false;
         $scope.ocultaDetalleOficina = false;
-        $scope.ocultaFormCreacionOficina = false;   
+        $scope.ocultaFormCreacionOficina = false;
+        $scope.item = '';
+        $scope.piso = '';        
+        $scope.disableInputs = false;   
+    }
+
+    $scope.another = function()
+    {
+        $scope.recordCreated = false;
+        $scope.item = '';
+        $scope.piso = '';        
+        $scope.disableInputs = false;
     }
 
     $scope.closeAddOffice = function()
     {
+        $scope.item = '';
+        $scope.piso = '';        
+        $scope.disableInputs = false;
         $scope.ocultaDetalleOficina = false;
         $scope.ocultaFormCreacionOficina = false;
     }
@@ -283,6 +358,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
     $scope.cierraDetalles = function()
     {
         $scope.resultResource = false;
+        $scope.integrantesOficina = [];
     }
 
     $scope.cancelDelete = function()
@@ -290,9 +366,189 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
         $scope.selectedIdResource = "";
     }
 
-    $scope.deleteProcessOficina = function()
+    $scope.resetForm = function()
     {
+        $scope.item = '';
+        $scope.piso = '';
+        $scope.disableInputs = false;
+    }
 
+    $scope.mensajeErrorOficina = '';
+    $scope.muestraErrorOficina = false;
+    $scope.typeAlert = '';
+
+    $scope.deleteProcessOficina = function(idOficina)
+    {
+        var promiseDeleteOficina = $http.post(baseurl + 'oficinas/delete', { id_sg_oficina : idOficina });
+
+        promiseDeleteOficina.then((response) => {
+            if(response.data.status)
+            {                
+                $scope.mensajeErrorOficina = response.data.message;
+                $scope.muestraErrorOficina = true;
+                $scope.typeAlert = 'success';                
+                $scope.item = '';
+                $scope.piso = '';
+                $scope.disableInputs = false;
+                $scope.readOficinas();
+            }
+            else
+            {
+                $scope.mensajeErrorOficina = response.data.message;
+                $scope.muestraErrorOficina = true;
+                $scope.typeAlert = 'danger';                
+                $scope.item = '';
+                $scope.piso = '';
+                $scope.disableInputs = false;
+            }
+
+            $timeout(() => {
+                $scope.muestraErrorOficina = false;                
+            }, 2500)
+        });
+    }
+
+    $scope.editarOficina = function()
+    {
+        $scope.buttonCreateOficina = false;
+        $scope.ocultaDetalleOficina = true;
+        $scope.ocultaFormCreacionOficina = true;
+    }
+
+    $scope.messageEmpleados = '';
+    $scope.dataEmpleados = [];
+
+    $scope.readEmpleados = function()
+    {
+        var requestEmpleados = $http.post(baseurl + 'empleados/readbyempresa', { uid : uid });
+        $scope.messageEmpleados = 'Verificando ...';
+
+        requestEmpleados.then((response) => {
+            
+            if(response.data.status)
+            {
+                $scope.loadDataEmpleados = true;
+                $scope.dataEmpleados = response.data.rows;
+                $scope.messageEmpleados = ''
+            }
+            else
+            {
+                $scope.loadDataEmpleados = false;
+                $scope.messageEmpleados = 'No encontramos empleados';
+            }
+        });
+    }
+
+    $scope.readEmpleados();
+    $scope.listarIntegrantes = false;
+
+    $scope.abrirIntegrantes = function()
+    {
+        $scope.listarIntegrantes = true;
+        $scope.ocultaDetalleOficina = true;
+    }
+
+    $scope.cierraIntegrantes = function()
+    {
+        $scope.listarIntegrantes = false;
+        $scope.ocultaDetalleOficina = false;
+    }
+
+    $scope.selectedEmpleado = 0;    
+
+    $scope.muestraAsignacion = function(idEmpleado)
+    {
+        $scope.selectedEmpleado = idEmpleado;
+    }
+
+    $scope.asignaEmpleado = function(idEmpleado)
+    {
+        $scope.asignacionEmpleado = idEmpleado;        
+    }
+
+    $scope.cancelAsignacion = function()
+    {
+        $scope.asignacionEmpleado = 0;
+    }
+
+    $scope.asignadoEmpleado = false;
+    $scope.muestraErrorAsignacion = false;
+    $scope.mensajeErrorAsignacion = '';
+    $scope.tipoMensaje = '';
+
+    $scope.procesaAsignacion = function(idOficina, idEmpleado)
+    {
+        var asignaEmpleadoOficina = $http.post(baseurl + 'oficinas/asignaempleado', { idEmpleado : idEmpleado, idOficina : idOficina, idUser : uid })
+
+        asignaEmpleadoOficina.then((response) => {
+            if(response.data.status)
+            {
+                $scope.asignadoEmpleado = true;
+                $scope.asignacionEmpleado = 0;
+                $scope.requestDetails(idOficina);
+            }
+            else
+            {
+                $scope.muestraErrorAsignacion = true;
+                $scope.mensajeErrorAsignacion = response.data.message;
+                $scope.tipoMensaje = 'danger';
+            }
+        });
+
+        $timeout(() => {
+            $scope.muestraErrorAsignacion = false;
+        }, 2500);
     }
     
+    $scope.empleadoAsignado = 0;
+
+    $scope.removerEmpleadoOficina = function(idEmpleado)
+    {
+        $scope.empleadoAsignado = idEmpleado;
+    }
+
+    $scope.cancelaRemover = function()
+    {
+        $scope.empleadoAsignado = 0;
+    }
+
+    $scope.eliminaEmpleadoOficina = function(idEmpleado, idOficina)
+    {
+        var promiseDeleteAsignacion = $http.post(baseurl + 'oficinas/deleteasignacion', { id_sg_personal : idEmpleado });
+
+        promiseDeleteAsignacion.then((response) => {
+            if(response.data.status)
+                $scope.requestDetails(idOficina);
+        });
+    }
+
+    $scope.btnActualizaOficina = 'Actualizar';
+
+    $scope.updateOficina = function()
+    {
+        var oficina = Form.OnSubmitForm({
+            form    : '#frm-create-oficina',
+            css     : '.required',
+            route   : baseurl + 'oficinas/update',
+            fields  : '',
+            clear   : false
+        });
+
+        if(oficina == true)
+        {
+            return false;
+        }
+        else
+        {
+            $scope.btnActualizaOficina = 'Actualizando ...';
+
+            oficina.then((response) => {
+                if(response.data.status)
+                    $scope.readOficinas();
+
+                $scope.btnActualizaOficina = 'Actualizar';
+            });
+        }
+    }
+
 }]);
