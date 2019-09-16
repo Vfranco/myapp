@@ -21,13 +21,13 @@
                             <h5 class="h3 mb-0">Te damos la bienvenida a Sigga</h5>
                         </div>
                         <div class="col-4">
-                            <h5 class="h3 mb-0 pull-right">Escoje tu mejor opción</h5>
+                            <h5 class="h3 mb-0 pull-right">Escoge tu mejor opción</h5>
                         </div>
                     </div>
                 </div>
                 <div class="card-body text-center">
                     <img class="img-fluid" src="<?php echo BASE_URL; ?>Content/assets/img/sigga-logo-2.png" style="height: 191px;">
-                    <p class="card-text mb-6">Gracias, por registrarte en <strong>Sigga</strong>, queremos darte las mejores y mas faciles opciones para la gestion de tu personal, proveedores y/o visitantes, te invitamos a escojer tu modulo de preferencia, dando click en el botón, <strong>Empezar!</strong>.</p>
+                    <p class="card-text mb-6">Gracias por registrarte en <strong>Sigga</strong>. Queremos darte las mejores y más fáciles opciones para la gestión de tu personal, contratistas y/o visitantes; te invitamos a escoger tu módulo de preferencia presionando el botón <strong>Empezar!</strong></p>
                     <div class="row">
                         <?php if(Models\Usuario\ModelUsuario::verificarEmpresas($id_sg_usuario)): ?>
                         <div class="col-lg-4 col-xs-12">
@@ -36,7 +36,7 @@
                                     <h4 class="text-uppercase ls-1 text-white py-3 mb-0">Mi Personal</h4>
                                 </div>
                                 <div class="card-body">
-                                    <span class="text-white">Gestiona tu personal, valida su Entrada y Salida, Acceso Controlado</span>
+                                    <span class="text-white">Gestiona tu personal, valida su entrada y salida, acceso controlado</span>
                                 </div>
                                 <div class="card-footer bg-transparent">
                                     <button type="button" class="btn btn-primary mb-3" ng-click="next('mipersonal')">Empezar!</button>
@@ -51,7 +51,7 @@
                                     <h4 class="text-uppercase ls-1 text-white py-3 mb-0">Mis Visitantes</h4>
                                 </div>
                                 <div class="card-body">
-                                    <span class="text-white">Controla tus Visitas, Autoriza Entradas, Administra tu Unidad Residencial u Oficinas</span>
+                                    <span class="text-white">Controla tus visitas, autoriza entradas, administra tu unidad residencial u oficinas</span>
                                 </div>
                                 <div class="card-footer bg-transparent">
                                     <button type="button" class="btn btn-primary mb-3" ng-click="next('visitantes')">Empezar!</button>
@@ -60,19 +60,19 @@
                         </div>
                         <?php endif; ?>
                         <?php if(Models\Usuario\ModelUsuario::verificarProveedor($id_sg_usuario)): ?>
-                        <div class="col-lg-4 col-xs-12">
+                        <!-- <div class="col-lg-4 col-xs-12">
                             <div class="card card-pricing bg-gradient-warning border-0 text-center mb-4">
                                 <div class="card-header bg-transparent">
-                                    <h4 class="text-uppercase ls-1 text-white py-3 mb-0">Mis Proveedores</h4>
+                                    <h4 class="text-uppercase ls-1 text-white py-3 mb-0">Mis Contratistas</h4>
                                 </div>
                                 <div class="card-body">
-                                    <span class="text-white">Administra tus proveedores, gestiona su acceso, verifica los requisitos</span>
+                                    <span class="text-white">Administra tus contratistas, gestiona su acceso, verifica los requisitos</span>
                                 </div>
                                 <div class="card-footer bg-transparent">
                                     <button type="button" class="btn btn-primary mb-3">Empezar!</button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <?php endif; ?>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                                         'ngmodel'   => "empresa",
                                     ],
                                     'NIT'   => [
-                                        'type'      => 'text',
+                                        'type'      => 'number',
                                         'name'      => 'nitEmpresa',
                                         'css'       => 'form-control required',
                                         'labelCss'  => 'form-control-label',
@@ -364,7 +364,7 @@
                     <div class="text-center" ng-hide="createdUnidad || errorCreatedEmpresaVisitante">
                         <img class="img-fluid mb-3" src="<?php echo BASE_URL; ?>Content/assets/img/unidad_residencial.png" ng-if="tipoRegistroSigga == 'residencial'">
                         <img class="img-fluid mb-3" src="<?php echo BASE_URL; ?>Content/assets/img/company.png" ng-if="tipoRegistroSigga == 'empresa'">
-                        <p class="card-text mb-4">Puedes registrar los datos basicos de tu Unidad Residencial con el siguiente formulario.</p>
+                        <p class="card-text mb-4">Puedes registrar los datos básicos de tu Unidad Residencial con el siguiente formulario.</p>
                         <div class="alert alert-warning" ng-if="errorCreated">{{ errorMessageUnidad }}</div>
                     </div>
                     <div ng-if="tipoRegistroSigga == 'residencial'" ng-hide="createdUnidad">
@@ -495,7 +495,7 @@
                                 'ngmodel'   => "empresa",
                             ],
                             'NIT'   => [
-                                'type'      => 'text',
+                                'type'      => 'number',
                                 'name'      => 'nitEmpresa',
                                 'css'       => 'form-control required',
                                 'labelCss'  => 'form-control-label',
@@ -579,7 +579,7 @@
                         <div class="col-12 mb-3 text-center" ng-hide="createdSedeVisitante">
                             <h5 class="h3 mb-3">Tus Sedes</h5>
                             <img class="img-fluid" src="<?php echo BASE_URL; ?>Content/assets/img/sedes.png">
-                            <p class="card-text">Crea las sedes de tu empresa, si solo tienes una sede crea está como principal.</p>
+                            <p class="card-text">Crea las sedes de tu empresa. Si solo tienes una sede, crea esta como principal.</p>
                             <div class="alert alert-danger" ng-if="errorCreatedSedeVisitante">{{ errorMessageSedeVisitante }}</div>
                         </div>
                         <div class="col">

@@ -21,7 +21,7 @@ sigga.controller('login', ['$scope', 'Core', 'Form', '$http', '$window', functio
                 var promiseChangeTipoRegistro = $http.post(baseurl + 'usuarios/changetiporegistro', { user : steps.uid });
 
                 promiseChangeTipoRegistro.then((response) => {
-                    if(response.data.status)                
+                    if(response.data.status)
                         $window.localStorage.removeItem('paso');
                 });
             }

@@ -60,7 +60,7 @@
                         <a href="javascript:" class="btn btn-sm btn-primary">Ver Apartamentos</a>
                         <a href="javascript:" class="btn btn-sm btn-primary">Ver Residentes</a>
                     <?php else: ?>                        
-                        <a href="javascript:" class="btn btn-sm btn-primary">Ver Visitas</a>
+                        <a href="javascript:" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-notification">Ver Visitas</a>
                     <?php endif; ?>
                 </p>
             </div>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <p class="mt-3 mb-0 text-sm">                    
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Ver Actividad</a>
+                    <a href="javascript:" class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#modal-notification">Ver Actividad</a>
                 </p>
             </div>
         </div>

@@ -51,7 +51,8 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Mis Empleados</h5>                                    
-                                    <span class="h2 font-weight-bold mb-0"><?php echo Models\Actividades\ModelActividades::totalEmpleados($userid, 'totalEmpleados'); ?></span>
+                                    <!-- <span class="h2 font-weight-bold mb-0"><?php echo Models\Actividades\ModelActividades::totalEmpleados($userid, 'totalEmpleados'); ?></span> -->
+                                    <span class="h2 font-weight-bold mb-0">{{dataEmpleados.length}}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -105,7 +106,7 @@
                             </div>
                             <p class="mt-3 mb-0 text-sm d-flex justify-content-left">
                                 <span class="text-wrap">Paquete: tienes <?php echo Models\Usuario\ModelUsuario::ObtenerPlanByEmpresa($userid)[0]['registros']; ?> actividades</span>
-                                <a href="javascript:" class="btn btn-sm btn-primary ml-2" ng-click="showPlanesData()">Mas Planes</a>
+                                <a href="javascript:" class="btn btn-sm btn-primary ml-2" ng-click="showPlanesData()">Más Planes</a>
                             </p>
                         </div>
                     </div>
@@ -608,7 +609,7 @@
                                 <div class="col">
                                     <div class="my-4">
                                         <span class="h6 surtitle text-muted">
-                                            Cedula
+                                            Cédula
                                         </span>
                                         <div class="h3">{{ cedula }}</div>
                                     </div>
@@ -697,7 +698,7 @@
                                 'col'       => 'col-sm-8',
                                 'data'      => Models\Combos\ModelCombos::ComboSedes($userid)
                             ],
-                            'Cedula'   => [
+                            'Cédula'   => [
                                 'type'      => 'number',
                                 'name'      => 'cedula',
                                 'css'       => 'form-control required',
@@ -809,7 +810,7 @@
                                 'ngmodel'   => "sede",
                                 'data'      => Models\Combos\ModelCombos::ComboSedes($userid)
                             ],
-                            'Cedula'   => [
+                            'Cédula'   => [
                                 'type'      => 'number',
                                 'name'      => 'cedula',
                                 'css'       => 'form-control required',
@@ -933,7 +934,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0 text-white">Este Més</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0 text-white">Este Mes</h5>
                                     <span class="h2 font-weight-bold mb-0 text-white">Entradas (<?php echo Models\Actividades\ModelActividades::visitasMes($userid, 'esteMes', 'fecha_ingreso'); ?>)</span>
                                     <br>
                                     <span class="h2 font-weight-bold mb-0 text-white">Salidas (<?php echo Models\Actividades\ModelActividades::visitasMes($userid, 'esteMes', 'fecha_salida'); ?>)</span>
@@ -978,7 +979,7 @@
                     <table id="table-in-out" class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th ng-show="cedulaCheck">Cedula</th>
+                                <th ng-show="cedulaCheck">Cédula</th>
                                 <th ng-show="nombresCheck">Nombres</th>
                                 <th ng-show="apellidosCheck">Apellidos</th>
                                 <th ng-show="sedeCheck">Sede</th>
@@ -1164,7 +1165,7 @@
                             <div class="col">
                                 <div class="custom-control custom-checkbox mb-3">
                                     <input class="custom-control-input" name="sg.cedula_personal" id="cedula" type="checkbox" ng-checked="cedulaCheck" ng-model="cedulaCheck">
-                                    <label class="custom-control-label" for="cedula">Cedula</label>
+                                    <label class="custom-control-label" for="cedula">Cédula</label>
                                 </div>
                                 <div class="custom-control custom-checkbox mb-3">
                                     <input class="custom-control-input" name="sg.nombres_personal" id="nombres" type="checkbox" ng-checked="nombresCheck" ng-model="nombresCheck">
@@ -1260,7 +1261,7 @@
                     <table id="todos-mis-empleados" class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th>Cedula</th>
+                                <th>Cédula</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
                                 <th>Sede</th>

@@ -18,7 +18,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
     $scope.idOficina = 0;    
     $scope.searchEmpleado = '';
     $scope.searchTorre = '';
-    $scope.searchIntegrante = '';
+    $scope.searchIntegrante = '';    
 
     var promiseData = $http.post(baseurl + controller + 'readbyid', { uid: uid });
 
@@ -243,6 +243,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
                     $scope.integrantesOficina = response.data.integrantes;
                     $scope.resultResource = true;
 
+                    $('#idTorre').val(response.data.rows[0].id_sg_torre).change();
                     $scope.item = response.data.rows[0].id_sg_torre;
                     $scope.piso = response.data.rows[0].piso_nivel;
                     $scope.oficina = response.data.rows[0].oficina;
@@ -293,7 +294,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
         else
         {
             oficina.then((response) => {
-                if(response.status)
+                if(response.data.status)
                 {
                     $scope.oficinaMessage = response.data.message;
                     $scope.recordCreated = true;
@@ -324,26 +325,22 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
     $scope.borraMensajeSuccess = function()
     {
+        Form.resetForm('#frm-create-oficina');
         $scope.recordCreated = false;
         $scope.ocultaDetalleOficina = false;
-        $scope.ocultaFormCreacionOficina = false;
-        $scope.item = '';
-        $scope.piso = '';        
+        $scope.ocultaFormCreacionOficina = false;                
         $scope.disableInputs = false;   
     }
 
     $scope.another = function()
     {
-        $scope.recordCreated = false;
-        $scope.item = '';
-        $scope.piso = '';        
+        Form.resetForm('#frm-create-oficina');
+        $scope.recordCreated = false;        
         $scope.disableInputs = false;
     }
 
     $scope.closeAddOffice = function()
-    {
-        $scope.item = '';
-        $scope.piso = '';        
+    {        
         $scope.disableInputs = false;
         $scope.ocultaDetalleOficina = false;
         $scope.ocultaFormCreacionOficina = false;
@@ -386,9 +383,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
             {                
                 $scope.mensajeErrorOficina = response.data.message;
                 $scope.muestraErrorOficina = true;
-                $scope.typeAlert = 'success';                
-                $scope.item = '';
-                $scope.piso = '';
+                $scope.typeAlert = 'success';
                 $scope.disableInputs = false;
                 $scope.readOficinas();
             }
@@ -397,8 +392,6 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
                 $scope.mensajeErrorOficina = response.data.message;
                 $scope.muestraErrorOficina = true;
                 $scope.typeAlert = 'danger';                
-                $scope.item = '';
-                $scope.piso = '';
                 $scope.disableInputs = false;
             }
 
@@ -410,6 +403,7 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
     $scope.editarOficina = function()
     {
+        $scope.requestDetails($scope.idOficina);
         $scope.buttonCreateOficina = false;
         $scope.ocultaDetalleOficina = true;
         $scope.ocultaFormCreacionOficina = true;
@@ -485,6 +479,9 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
             {
                 $scope.asignadoEmpleado = true;
                 $scope.asignacionEmpleado = 0;
+                $scope.muestraErrorAsignacion = true;
+                $scope.mensajeErrorAsignacion = response.data.message;
+                $scope.tipoMensaje = 'success';
                 $scope.requestDetails(idOficina);
             }
             else
@@ -518,7 +515,10 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
         promiseDeleteAsignacion.then((response) => {
             if(response.data.status)
+            {
                 $scope.requestDetails(idOficina);
+                $scope.empleadoAsignado = 0;
+            }
         });
     }
 
@@ -544,11 +544,53 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
             oficina.then((response) => {
                 if(response.data.status)
+                {
+                    $scope.oficinaMessage = response.data.message;
+                    $scope.recordCreated = true;
                     $scope.readOficinas();
+                }
 
                 $scope.btnActualizaOficina = 'Actualizar';
             });
         }
+    }
+
+    $scope.noMostrarOficinas = false;    
+    $scope.detalleOficinas = [];
+    $scope.loadDetalleOficinas = false;
+    $scope.enableSearch = false;
+
+    $scope.showDetallesOficinas = function()
+    {
+        $scope.detalleOficinas = [];
+        $scope.noMostrarOficinas = true;
+        $scope.loadDetalleOficinas = true;
+
+        var promiseDataOficinasDetalle = $http.post(baseurl + 'oficinas/resumenempleadosoficina', { idUser : uid });
+        
+        promiseDataOficinasDetalle.then((response) => {
+            if(response.data.status)            
+                $scope.detalleOficinas = response.data.rows;
+            else            
+                $scope.detalleOficinas = [];
+
+            $scope.loadDetalleOficinas = false;
+        })
+    }
+
+    $scope.closeDetalleOficinas = function()
+    {
+        $scope.noMostrarOficinas = false;
+    }
+
+    $scope.enableSearchOption = function()
+    {
+        $scope.enableSearch = true;
+    }
+
+    $scope.closeSearchOption = function()
+    {
+        $scope.enableSearch = false;
     }
 
 }]);

@@ -63,7 +63,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8 col-md-8">
                             <h1 class="text-white">Crea tu cuenta <?php echo APP_TITLE; ?></h1>
-                            <p class="text-lead text-light">Escoje el paquete que más se ajuste a tus necesidades, y empieza a usar Sigga</p>
+                            <p class="text-lead text-light">Escoge el paquete que más se ajuste a tus necesidades, y empieza a usar Sigga</p>
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
                     </div>
                     <div class="row">						
 						<div class="col text-right">
-							<a href="/" class="text-light"><small>Ya tienes una cuenta ? Inicia Sesion</small></a>
+							<a href="/" class="text-light"><small>¿ Ya tienes una cuenta ?</small></a>
 						</div>
 					</div>
                 </div>
