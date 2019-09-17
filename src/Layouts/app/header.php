@@ -14,7 +14,7 @@
   <?php Core\Html::app('lib/angularjs/angular-animate.min');?>
   <?php Core\Html::app('lib/angularjs/angular-route');?>
   <?php Core\Html::app('lib/angularjs/angular-infinite-scroll');?>
-  <?php Core\Html::app('lib/angularjs/angular-scroll.min');?>
+  <?php Core\Html::app('lib/angularjs/angular-scroll.min');?>  
   <?php Core\Html::app('lib/rxjs/rx.all');?>
   <?php Core\Html::app('lib/rxjs/rx.angular.min');?>
   <?php Core\Html::app('lib/rxjs/rx.dom');?>
@@ -30,9 +30,9 @@
   <?php Core\Html::css("css/argon.min"); ?>
   <?php Core\Html::css("css/app"); ?>
   <?php if(Core\ActionFilters::noSession('sigga:usr')):?>
-  <?php Core\Html::app('app');?>
-  <?php else: ?>
-  <?php Core\Views::add('route'); ?>
+    <?php Core\Html::app('app');?>
+  <?php else: ?>      
+    <?php Core\Views::add('route'); ?>
   <?php endif; ?>  
   <script type="text/javascript">
     /** Sigga 1.0 beta */

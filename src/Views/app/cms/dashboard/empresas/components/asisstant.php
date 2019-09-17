@@ -198,8 +198,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="btn btn-neutral" ng-click="prev()">Regresar a la Bienvenida</button>
+                    </div>                    
                 </div>
             </div>
         </div>

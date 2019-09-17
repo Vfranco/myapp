@@ -31,8 +31,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-sm">
                     <?php if(!Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario)): ?>                        
-                        <a href="javascript:" class="btn btn-sm btn-primary">Editar Unidad</a>
-                        <a href="javascript:" class="btn btn-sm btn-primary">Crear Aptos</a>
+                        <a href="javascript:" class="btn btn-sm btn-primary">Editar Unidad</a>                        
                     <?php else: ?>                        
                         
                     <?php endif; ?>                    

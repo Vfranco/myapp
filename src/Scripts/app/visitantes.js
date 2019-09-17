@@ -526,7 +526,8 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
 
     $scope.updateOficina = function()
     {
-        var oficina = Form.OnSubmitForm({
+        var oficina = Form.OnSubmitForm(
+        {
             form    : '#frm-create-oficina',
             css     : '.required',
             route   : baseurl + 'oficinas/update',

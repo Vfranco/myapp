@@ -33,5 +33,8 @@
     "gulp-uglify": "^3.0.1",
     "rx-angular": "^1.1.3",
     "rxjs": "^6.5.2"
+  },
+  "dependencies": {
+    "angular-schema-form": "^0.8.13"
   }
 }

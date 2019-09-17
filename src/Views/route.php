@@ -12,10 +12,11 @@
 
             $httpProvider.defaults.headers.common = {
                 'X-Requested-With'  : 'XHRHttpRequest'
-            };            
+            };
+
             $routeProvider.when('/', {})
 <?php foreach(Models\Usuario\ModelUsuario::ObtenerRutas($_SESSION['sigga:usr']) as $route): ?>
-    <?php if($route['estado'] == '1'):?>
+    <?php if($route['estado'] == '1'):?>        
         .when('<?php echo $route['route']; ?>', { templateUrl : '<?php echo $route['route']?>/index', controller : '<?php echo str_replace('/', '', $route['route']); ?>' })
     <?php endif; ?>
 <?php endforeach; ?>.otherwise({ redirecTo : '/' });
