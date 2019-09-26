@@ -411,6 +411,7 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
         var requestDataReporteBySedes = $http.post(baseurl + 'reportes/reporteporsedes', { id_cms_empresa : uid });
         var labels = [];
         var visitas = [];
+        var visitadas = [];
 
         requestDataReporteBySedes.then(function(response){
             if(response.data.status)
@@ -421,12 +422,16 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
                 for(var i in $scope.reporteVisitasSedes)
                 {
                     labels.push($scope.reporteVisitasSedes[i].sede);
-                    visitas.push(parseInt($scope.reporteVisitasSedes[i].visitas));
+                    visitas.push(parseInt($scope.reporteVisitasSedes[i].sede_personal));                    
+                    visitadas.push(parseInt($scope.reporteVisitasSedes[i].sede_visitada));
                 }
 
-                chartBarras(labels, visitas);
-                chartLines(labels, visitas);
-                chartPie(labels, visitas);
+                chartBarras(labels, visitas, '#chart-bars');
+                chartLines(labels, visitas, '#chart-lines');
+                chartPie(labels, visitas, '#chart-pie');
+                chartLines(labels, visitadas, '#chart-lines-visitada');
+                chartBarras(labels, visitadas, '#chart-bars-visitada');
+                chartPie(labels, visitadas, '#chart-pie-visitada');
                 
             }
             else
@@ -434,9 +439,9 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
         });
     }
 
-    var chartBarras = function(labels, data)
+    var chartBarras = function(labels, data, idElement)
     {
-        var $chart = $('#chart-bars');
+        var $chart = $(idElement);
 
         var ordersChart = new Chart($chart, {
             type: 'bar',
@@ -452,9 +457,9 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
         $chart.data('chart', ordersChart);
     }
 
-    var chartLines = function(labels, data)
+    var chartLines = function(labels, data, idElement)
     {
-        var $line = $('#chart-lines');                
+        var $line = $(idElement);                
 
         var salesChart = new Chart($line, {
             type: 'line',
@@ -483,9 +488,9 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
         $line.data('chart', salesChart);
     }
 
-    var chartPie = function(labels, data)
+    var chartPie = function(labels, data, idElement)
     {
-        var $chart = $('#chart-pie');
+        var $chart = $(idElement);
 
         var randomScalingFactor = function() {
 			return Math.round(Math.random() * 100);

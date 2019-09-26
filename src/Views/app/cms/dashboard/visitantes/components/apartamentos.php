@@ -6,8 +6,8 @@
                     <h5 class="h3 mb-0">Mis Apartamentos</h5>                    
                 </div>
                 <div class="col d-flex">
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-8" ng-click="openAddApto()">Crear Aptos</a>
-                    <!-- <a href="javascript:" class="btn btn-sm btn-primary" ng-click="openAddTorre()">Crear Torres</a> -->
+                    <a href="javascript:" class="btn btn-sm btn-primary" ng-click="openAddApto()">Crear Aptos</a>
+                    <a href="javascript:" class="btn btn-sm btn-primary" ng-click="openTorre()">Ver Torres</a>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                                 <span class="fas fa-search"></span>
                             </div>
                         </div>
-                        <input ng-model="searchApartamento" type="search" class="form-control" placeholder="Buscar Empleado" ng-disabled="!loadDataApartamentos">
+                        <input ng-model="searchApartamento" type="search" class="form-control" placeholder="Buscar Apto" ng-disabled="!loadDataApartamentos">
                     </div>
                 </div>
             </form>
@@ -63,7 +63,8 @@
                             <span class="text-danger" ng-if="rows.id_sg_estado == '5'">●</span>
                             <small ng-if="rows.id_sg_estado == '5'">Descocupado</small>
                             <br>
-                            <small><a href="javascript:">Piso {{ rows.piso_apto }}</a></small>
+                            <small><a href="javascript:">{{ rows.nombre_torre }} | </a></small>
+                            <small><a href="javascript:">Piso {{ rows.piso_apto }}</a></small>                            
                         </div>
                         <div class="col d-flex justify-content-center">
                             <button type="button" class="btn btn-sm btn-danger" ng-if="verDetalle == rows.id_sg_apto" ng-click="selectItem(rows.id_sg_apto)"><i class="fa fa-trash"></i></button>

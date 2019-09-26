@@ -22,3 +22,4 @@
     <?php Core\Html::app("production/app-filters.min"); ?>    
     <?php Core\Html::app("production/app.min"); ?>
 <?php endif; ?>
+<!-- Dev : Ing. Victor Franco | AREATIC S.A.S | vfrancov25@gmail.com | wsap : 3003676782 -->

@@ -54,10 +54,10 @@
                         </div>
                     </div>
                 </div>
-                <p class="mt-3 mb-0 text-sm">
+                <p class="mt-3 mb-0 text-sm d-flex">
                     <?php if(Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['elementos'] == 'Apartamentos &oacute; Casas'):?>
-                        <a href="javascript:" class="btn btn-sm btn-primary">Ver Apartamentos</a>
-                        <a href="javascript:" class="btn btn-sm btn-primary">Ver Residentes</a>
+                        <a href="javascript:" class="btn btn-sm btn-primary" ng-click="verGridApartamentos()">Ver Apartamentos</a>
+                        <a href="javascript:" class="btn btn-sm btn-primary" ng-click="verGridResidentes()">Ver Residentes</a>
                     <?php else: ?>                        
                         <a href="javascript:" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-notification">Ver Visitas</a>
                     <?php endif; ?>

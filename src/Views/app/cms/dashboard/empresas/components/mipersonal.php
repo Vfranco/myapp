@@ -602,7 +602,12 @@
                             </div>
                             <div class="row align-items-center" ng-show="enableDetails">
                                 <div class="col text-center">
-                                    <img src="<?php echo BASE_URL ?>Content/assets/img/empleado-default.jpg" class="rounded img-fluid">
+                                    <div ng-if="photo == 0">
+                                        <img src="<?php echo BASE_URL ?>Content/assets/img/empleado-default.jpg" class="rounded img-fluid">    
+                                    </div>
+                                    <div ng-if="photo != 0">
+                                        <img src="<?php echo API_REST ?>Content/{{ photo }}" class="rounded img-fluid">    
+                                    </div>                                    
                                     <label for="uploadfile" class="btn btn-sm btn-success mt-2"><i class="fa fa-image"></i></label>
                                     <input id="uploadfile" type="file" name="file[]" style="display: none;">
                                 </div>
@@ -682,13 +687,29 @@
                             'action'    => 'javascript:',
                             'css'       => 'none'
                         ])->formInputs([
-                            ''   => [
+                            '1'   => [
                                 'type'      => 'hidden',
                                 'name'      => 'idEmpresa',
                                 'css'       => '',
                                 'labelCss'  => '',
                                 'col'       => '',
                                 'value'     => "{{ uid }}"
+                            ],
+                            '2'   => [
+                                'type'      => 'hidden',
+                                'name'      => 'arl',
+                                'css'       => '',
+                                'labelCss'  => '',
+                                'col'       => '',
+                                'value'     => "1"
+                            ],
+                            '3'   => [
+                                'type'      => 'hidden',
+                                'name'      => 'eps',
+                                'css'       => '',
+                                'labelCss'  => '',
+                                'col'       => '',
+                                'value'     => "1"
                             ],
                             'Sedes'   => [
                                 'type'      => 'select',
@@ -966,7 +987,7 @@
                             <!-- <a href="javascript:" class="btn btn-sm btn-default btn-round btn-icon tooltip-message" ng-click="generateReportPDF()" data-toggle="tooltip" data-placement="top" title="Descargar PDF">
                                 <span class="btn-inner--icon"><i class="fas fa-file-pdf"></i></span>
                             </a> -->
-                            <a href="javascript:" class="btn btn-sm btn-success btn-round btn-icon tooltip-message" ng-click="exportToExcel('registros/exportexcel', '#table-in-out thead tr th', { id_cms_empresa : uid })" data-toggle="tooltip" data-placement="top" title="Descargar Reporte de Visitas">
+                            <a href="javascript:" class="btn btn-sm btn-success btn-round btn-icon tooltip-message" data-toggle="modal" data-target="#modal-notification" data-toggle="tooltip" data-toggle="tooltip" data-placement="top" title="Descargar Reporte de Visitas">
                                 <span class="btn-inner--icon"><i class="fas fa-file-excel"></i></span>
                             </a>
                             <a href="javascript:" class="btn btn-sm btn-danger btn-round btn-icon" ng-click="closeDetailsInOut()">
@@ -982,7 +1003,10 @@
                                 <th ng-show="cedulaCheck">Cédula</th>
                                 <th ng-show="nombresCheck">Nombres</th>
                                 <th ng-show="apellidosCheck">Apellidos</th>
-                                <th ng-show="sedeCheck">Sede</th>
+                                <th ng-show="sedeCheck">ARL</th>
+                                <th ng-show="sedeCheck">EPS</th>
+                                <th ng-show="sedeCheck">Sede Asignada</th>
+                                <th ng-show="sedeCheck">Sede Visitada</th>                                
                                 <th ng-show="entradaCheck">Entrada</th>
                                 <th ng-show="salidaCheck">Salida</th>
                                 <th ng-show="salidaCheck">Duración</th>
@@ -1004,8 +1028,17 @@
                                 <td ng-show="apellidosCheck">
                                     {{ rows.apellidos_personal }}
                                 </td>
+                                <td ng-show="apellidosCheck">
+                                    {{ rows.nombre_arl }}
+                                </td>
+                                <td ng-show="apellidosCheck">
+                                    {{ rows.nombre_eps }}
+                                </td>
                                 <td ng-show="sedeCheck">
                                     {{ rows.nombre_sede }}
+                                </td>
+                                <td ng-show="sedeCheck">
+                                    {{ rows.sede_visitada }}
                                 </td>
                                 <td class="table-actions" ng-show="entradaCheck">
                                     <strong>{{ rows.fecha_ingreso }}</strong> <span class="badge badge-success"><i class="ni ni-bold-up"></i></span>
@@ -1029,7 +1062,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h6 class="surtitle">Detalles por Sede</h6>
-                                    <h5 class="h3 mb-0">Resumen de Visitas</h5>
+                                    <h5 class="h3 mb-0">Resumen de Entradas/Salidas</h5>
                                 </div>
                                 <div class="col text-right">
                                     <button class="btn btn-sm btn-danger" ng-click="closeShowGraphics()"><i class="fa fa-times"></i></button>
@@ -1041,7 +1074,8 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Sede</th>
-                                        <th scope="col">Entradas/Salidas</th>
+                                        <th scope="col">Entradas/Salidas (Personal)</th>
+                                        <th scope="col">Entradas/Salidas (Sedes Visitadas)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1050,7 +1084,8 @@
                                     </tr>
                                     <tr ng-repeat="rows in reporteVisitasSedes">
                                         <th scope="row">{{ rows.sede }}</th>
-                                        <td>{{ rows.visitas }}</td>
+                                        <td>{{ rows.sede_personal }}</td>
+                                        <td>{{ rows.sede_visitada }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1092,6 +1127,45 @@
                         <div class="card-body">
                             <div class="chart">
                                 <canvas id="chart-pie" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="surtitle">Detalles por Sede (Visitada)</h6>
+                            <h5 class="h3 mb-0">Grafica Barras</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="chart-bars-visitada" class="chart-canvas-visitada"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="surtitle">Detalles por Sede (Visitada)</h6>
+                            <h5 class="h3 mb-0">Grafica Torta</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="chart-pie-visitada" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="surtitle">Detalles por Sede (Visitada)</h6>
+                            <h5 class="h3 mb-0">Grafica Lineal</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="chart-lines-visitada" class="chart-canvas"></canvas>
                             </div>
                         </div>
                     </div>
