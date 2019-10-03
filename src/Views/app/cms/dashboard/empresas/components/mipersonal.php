@@ -35,9 +35,11 @@
                                     <span class="h2 font-weight-bold mb-0">{{rows.empresa}}</span>
                                 </div>
                             </div>
-                            <p class="mt-3 mb-0 text-sm d-flex justify-content-center">
+                            <p class="mb-0 text-sm">
                                 <span class="text-nowrap">Estado</span>
                                 <span class="text-info ml-2" ng-if="rows.estado == '1'">Activa</span>
+                            </p>
+                            <p class="mt-3 mb-0 text-sm d-flex justify-content-right">
                                 <a href="#editarEmpresa" du-smooth-scroll du-scrollspy class="btn btn-sm btn-primary ml-2" ng-click="editarEmpresa()">Editar Empresa</a>
                                 <a href="#crearSedes" du-smooth-scroll du-scrollspy class="btn btn-sm btn-primary ml-2" ng-click="editarSede()">Crear Sedes</a>
                             </p>
@@ -608,8 +610,8 @@
                                     <div ng-if="photo != 0">
                                         <img src="<?php echo API_REST ?>Content/{{ photo }}" class="rounded img-fluid">    
                                     </div>                                    
-                                    <label for="uploadfile" class="btn btn-sm btn-success mt-2"><i class="fa fa-image"></i></label>
-                                    <input id="uploadfile" type="file" name="file[]" style="display: none;">
+                                    <!-- <label for="uploadfile" class="btn btn-sm btn-success mt-2"><i class="fa fa-image"></i></label>
+                                    <input id="uploadfile" type="file" name="file[]" style="display: none;"> -->
                                 </div>
                                 <div class="col">
                                     <div class="my-4">
@@ -1375,7 +1377,7 @@
                 </div>
             </div>
         </div>
-        <div class="col align-self-center mt-4" ng-show="showPlanes">
+        <!-- <div class="col align-self-center mt-4" ng-show="showPlanes">
             <div class="pricing card-group flex-column flex-md-row mb-3">
                 <div class="card card-pricing border-0 text-center mb-4">
                     <div class="card-header bg-transparent">
@@ -1708,7 +1710,7 @@
                     </div>
                 </div>                
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 <?php Core\Views::add('app.cms.dashboard.empresas.components.modals'); ?>

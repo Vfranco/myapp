@@ -25,6 +25,8 @@ app.controller('empresas', ['$scope', '$http', 'Form', '$timeout', 'Core', '$win
     $scope.showFormEditaSede = true;
     $scope.showPlanes = false;   
     $scope.tiporegistro = 1;
+    $scope.cedula = 0;
+    $scope.telefono = 0;
 
     var request = $http.post(baseurl + 'empresas/readbyuser', {uid : uid})
 

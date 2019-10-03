@@ -92,9 +92,7 @@
 
         </div>
     </div>
-
     <?php Core\Views::addLayout('app.footer'); ?>
-
 </body>
 
 </html>

@@ -1,1 +1,1 @@
-<div>Analitica</div>
+<div>Configuracion!</div>
