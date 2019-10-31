@@ -77,7 +77,7 @@ app.factory('Form', ['Core', '$http', function (Core, $http) {
             status = true;
         else
             promise = $http.post(obj.route, _this.serializeForm(obj.form + obj.fields ));
-
+        
         if(obj.clear)
             _this.resetForm(obj.form);
             
@@ -87,9 +87,34 @@ app.factory('Form', ['Core', '$http', function (Core, $http) {
         return promise;
     }
 
-    _this.test = function()
+    _this.checkFormObject = function(formObject)
     {
-        console.log('here Form');
+        let object = Object.keys(formObject);
+        let isEmpty = false;
+
+        if(object.length <= 0)
+            isEmpty = true;
+        else
+        {
+            for(let index in object)
+            {
+                if(typeof formObject[object[index]] == 'string')
+                {
+                    if(Core.isEmpty(formObject[object[index]]))
+                    {
+                        isEmpty = true;
+                        break;
+                    }
+                }
+                else if(formObject[object[index]] == undefined)
+                {
+                    isEmpty = true;
+                    break;
+                }
+            }
+        }
+        
+        return isEmpty;
     }
 
     return _this;

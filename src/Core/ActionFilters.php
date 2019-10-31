@@ -173,6 +173,4 @@ class ActionFilters
             print $e->getMessage();
         }
     }
-
-
 }

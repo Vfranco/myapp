@@ -145,7 +145,7 @@
                         ],
                         'Cancelar'      => [
                             'type'  => 'reset',
-                            'css'   => 'btn btn-default',
+                            'css'   => 'btn btn-default'                            
                         ]
                     ]);
                     ?>

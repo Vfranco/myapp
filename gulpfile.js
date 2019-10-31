@@ -6,7 +6,8 @@
 var gulp    = require('gulp'),
     concat  = require('gulp-concat'),
     uglify  = require('gulp-uglify');
-    babel   = require('gulp-babel');         
+    babel   = require('gulp-babel');
+    livereload = require('gulp-livereload');
 
 /**
  * ===============================
@@ -64,10 +65,11 @@ gulp.task('filters', async function(){
 });
 
 gulp.task('watch', function(){
+    livereload.listen();
     gulp.watch('src/Scripts/controllers/*.js', gulp.series('login'));
     gulp.watch('src/Scripts/app/*.js', gulp.series('app'));
     gulp.watch('src/Scripts/directives/*.js', gulp.series('directives'));
     gulp.watch('src/Scripts/factorys/*.js', gulp.series('factorys'));
     gulp.watch('src/Scripts/filters/*.js', gulp.series('filters'));
-    gulp.watch('src/Scripts/app/*.js', gulp.series('app'));
+    gulp.watch('src/Scripts/app/*.js', gulp.series('app'));    
 });

@@ -1016,7 +1016,7 @@
                         </thead>
                         <tbody>
                             <tr ng-if="dataVisitasEmpleado.length == 0">
-                                <td colspan="7" class="text-center">
+                                <td colspan="9" class="text-center">
                                     <span class="badge badge-default">No se registran Visitas</span>
                                 </td>
                             </tr>

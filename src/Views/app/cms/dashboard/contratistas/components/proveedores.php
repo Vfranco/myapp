@@ -1,15 +1,12 @@
-<div class="col-lg-4" ng-hide="noMostrarOficinas">
+<div class="col-lg-4">
     <div class="card">
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h5 class="h3 mb-0">Mis Oficinas</h5>
+                    <h5 class="h3 mb-0">Mis Contratistas</h5>
                 </div>
-                <div class="col d-flex justify-content-right">
-                    <?php if (Models\Usuario\ModelUsuario::verificarUnidad($id_sg_usuario)) : ?>
-                        <a href="#verTorres" du-smooth-scroll du-scrollspy class="btn btn-sm btn-primary ml-4" ng-click="openTorre()">Ver Torres</a>
-                        <a href="#creaOficinas" du-smooth-scroll du-scrollspy class="btn btn-sm btn-primary" ng-hide="showCreateForm" ng-click="addOffice()">Añadir Oficina</a>
-                    <?php endif; ?>
+                <div class="col d-flex">                    
+                    <a href="javascript:;" du-smooth-scroll du-scrollspy class="btn btn-sm btn-primary" ng-click="showFormContratistas()">Añadir Contratista</a>
                 </div>
             </div>
         </div>
@@ -22,13 +19,12 @@
                                 <span class="fas fa-search"></span>
                             </div>
                         </div>
-                        <input ng-model="searchResource" type="search" class="form-control" placeholder="Buscar" ng-disabled="!loadDataResource">
+                        <input type="search" class="form-control" placeholder="Buscar" ng-disabled="!loadDataResource">
                     </div>
                 </div>
             </form>
-        </div>        
-        <div class="card-body customScroll {{ setScroll(dataResource) }}" ng-class="{'removeScroll' : searchResource.length > 0}">
-            <!-- List group -->            
+        </div>
+        <div class="card-body">
             <ul class="list-group list-group-flush list my--3">
                 <li class="list-group-item px-0" ng-if="!loadDataResource">
                     <div class="row align-items-center">

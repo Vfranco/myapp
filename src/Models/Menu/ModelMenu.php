@@ -17,8 +17,8 @@ class ModelMenu extends Helper
         foreach($getUsuarioMenu as $key => $value)
         {
             if($value['estado'] != 1)
-                return false;
-            else 
+                ;
+            else
             {
                 ?>          
                 <a class="nav-link" href="<?php echo $value['href_menu']?>">

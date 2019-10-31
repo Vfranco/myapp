@@ -1,4 +1,4 @@
-app.factory('Core', ['$window', function ($window) {
+app.factory('Core', ['$window', '$http', function ($window, $http) {
 
     var core = {};
 
