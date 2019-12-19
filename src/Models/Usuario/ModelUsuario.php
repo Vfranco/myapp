@@ -6,6 +6,17 @@ use Core\Helper;
 
 class ModelUsuario extends Helper
 {
+    static function ObtenerUsuarioControl($user)
+    {
+        $owner = self::simpleQuery(
+            "creado_por",
+            "sg_usuarios_control",
+            "usuario = '". $user ."' LIMIT 1"
+        );
+
+        return $owner[0];
+    }
+
     static function ObtenerIDBySession($session)
     {
         $getId = self::ObtenerPerfilUsuario($session);

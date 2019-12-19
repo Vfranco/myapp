@@ -137,6 +137,16 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
                     $scope.dataTorres = response.data.rows;                    
             });
         }
+        else
+        {
+            var promiseObtenerTorres = $http.post(baseurl + 'torres/readbyid', { uid : uid });
+
+            promiseObtenerTorres.then((response) => {
+
+                if(response.data.status)                
+                    $scope.dataTorres = response.data.rows;
+            });
+        }
     }
 
     $scope.readOficinas = function()
@@ -252,6 +262,34 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
                 
                 $scope.muestraMensajeCarga = 'No hay datos que mostrar';
             });            
+        }
+        else
+        {
+            $scope.muestraMensajeCarga = 'Cargando Oficinas ...';
+
+            var promiseData = $http.post(baseurl + controller + 'readbyidoficina', { id_oficina : idSource });
+
+            promiseData.then((response) => {
+                
+                if(response.data.status)
+                {
+                    $scope.idOficina = response.data.rows[0].id_sg_oficina;
+                    $scope.nombreTorre = response.data.rows[0].nombre_torre;
+                    $scope.nombreOficina = response.data.rows[0].oficina;
+                    $scope.pisoNivel = response.data.rows[0].piso_nivel;
+                    $scope.area = response.data.rows[0].area;
+                    $scope.integrantesOficina = response.data.integrantes;
+                    $scope.resultResource = true;
+
+                    $('#idTorre').val(response.data.rows[0].id_sg_torre).change();
+                    $scope.item = response.data.rows[0].id_sg_torre;
+                    $scope.piso = response.data.rows[0].piso_nivel;
+                    $scope.oficina = response.data.rows[0].oficina;
+                    $scope.area = response.data.rows[0].area;
+                }
+                
+                $scope.muestraMensajeCarga = 'No hay datos que mostrar';
+            });
         }        
     }
 
@@ -592,6 +630,13 @@ app.controller('visitantes', ['$scope', '$http', 'rx', 'Form', '$timeout', funct
     $scope.closeSearchOption = function()
     {
         $scope.enableSearch = false;
+    }
+
+    $scope.resumenActividades = false;
+
+    $scope.showResumenActividades = function()
+    {
+        $scope.resumenActividades = true;
     }
 
 }]);

@@ -22,12 +22,26 @@ class Authentication
     static function CreateSesion()
     {
         $user = Request::phpInput();
-        $_SESSION['sigga:usr'] = Helper::encodeData($user['email']);
+        
+        if(!preg_match('/@/', $user['email']))
+        {
+            $_SESSION['sigga:usr'] = $user['email'];
 
-        $getEntryPoint = ModelUsuario::ObtenerPerfilUsuario(Helper::encodeData($user['email']));
-        $redirect = BASE_URL . 'dashboard/index/' . Helper::encodeData($user['email']) . $getEntryPoint['entrypoint'];
+            $owner = ModelUsuario::ObtenerUsuarioControl($user['email']);
+            $_SESSION['sigga:owner'] = $owner['creado_por'];
 
-        Response::status(200)->json(['status' => true, 'redirect' => $redirect]);
+            $redirect = BASE_URL . 'dashboard/index/' . $owner['creado_por'] . '#!/monitor';
+            Response::status(200)->json(['status' => true, 'redirect' => $redirect]);
+        }
+        else
+        {
+            $_SESSION['sigga:usr'] = Helper::encodeData($user['email']);            
+
+            $getEntryPoint = ModelUsuario::ObtenerPerfilUsuario(Helper::encodeData($user['email']));
+            $redirect = BASE_URL . 'dashboard/index/' . Helper::encodeData($user['email']) . $getEntryPoint['entrypoint'];
+    
+            Response::status(200)->json(['status' => true, 'redirect' => $redirect]);
+        }        
     }
 
     static function Logout()

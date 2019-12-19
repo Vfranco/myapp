@@ -30,7 +30,7 @@
                     </div>                    
                 </div>
                 <p class="mt-3 mb-0 text-sm d-flex">
-                    <a href="javascript:" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-notification">Gestionar</a>
+                    <!-- <a href="javascript:" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-notification">Gestionar</a> -->
                 </p>
             </div>
         </div>
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col">
                         <h5 class="card-title text-uppercase text-muted mb-0">Mis Proveedores</h5>
-                        <span class="h2 font-weight-bold mb-0">6</span>
+                        <span class="h2 font-weight-bold mb-0">{{ dataEmpresas.length }}</span>
                     </div>
                     <div class="col-auto">
                         <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -94,9 +94,10 @@
                 </div>
                 <p class="mt-3 mb-0 text-sm">
                     <span class="text-nowrap">Mas información click</span>
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Planes</a>
+                    <a href="javascript:" class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#modal-notification">Planes</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
+<?php Core\Views::add('app.cms.dashboard.empresas.components.modals'); ?>

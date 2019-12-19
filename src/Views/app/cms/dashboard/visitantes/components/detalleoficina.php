@@ -312,7 +312,7 @@
                                 <div class="row alert alert-default">
                                     <div class="col-12 text-center mb-2"><span class="text-sm">Deseas asignar este empleado a la Oficina {{area}}</span></div>
                                     <div class="col text-center">
-                                        <form id="frm-asigna-empleado" action="javascript:" method="post">
+                                        <form action="javascript:" method="post">
                                             <input type="hidden" class="required" name="idUser" value="{{ uid }}">
                                             <input type="hidden" class="required" name="idOficina" value="{{ idOficina }}" ng-model="idOficina">
                                             <input type="hidden" class="required" name="idEmpleado" value="{{ rows.id_sg_personal }}">

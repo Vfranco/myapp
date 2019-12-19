@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <p class="mt-3 mb-0 text-sm">                    
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#modal-notification">Ver Actividad</a>
+                    <a href="javascript:" class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#modal-notification" ng-click="showResumenActividades()">Ver Actividad</a>
                 </p>
             </div>
         </div>
@@ -103,7 +103,7 @@
                 </div>
                 <p class="mt-3 mb-0 text-sm">
                     <span class="text-nowrap">Mas información click</span>
-                    <a href="javascript:" class="btn btn-sm btn-primary ml-2">Planes</a>
+                    <!-- <a href="javascript:" class="btn btn-sm btn-primary ml-2">Planes</a> -->
                 </p>
             </div>
         </div>

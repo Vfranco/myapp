@@ -8,7 +8,7 @@
                 <div class="col text-right">
                     <button class="btn btn-sm btn-info" ng-click="enableSearchTerminal = true" ng-hide="enableSearchTerminal"><i class="fa fa-search"></i></button>
                     <button class="btn btn-sm btn-danger" ng-click="enableSearchTerminal = false" ng-show="enableSearchTerminal"><i class="fa fa-search-minus"></i></button>
-                    <button class="btn btn-sm btn-info" ng-hide="showGridTerminales" ng-click="showFormCreateTerminal()"><i class="fa fa-plus"></i></button>
+                    <button class="btn btn-sm btn-info" ng-hide="showGridTerminales" ng-click="showFormOptionTerminal()"><i class="fa fa-plus"></i></button>
                     <button class="btn btn-sm btn-danger" ng-show="showGridTerminales" ng-click="hideFormCreateTerminal()"><i class="fa fa-times"></i></button>
                 </div>
             </div>
@@ -34,7 +34,8 @@
                 <input ng-model="formTerminal.uid" type="hidden" name="uid" value="{{uid}}" ng-init="formTerminal.uid = this.uid">
                 <input ng-model="formTerminal.idTerminal" type="hidden" name="idterminal" value="{{idTerminal}}" ng-init="formTerminal.idTerminal = this.idTerminal">
                 <div class="row" ng-show="showFormTerminal">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5" ng-hide="usuarioTerminalCreated">
+                        <button class="btn btn-sm btn-info pull-right mb-3" ng-click="usuarioTerminalCreated = true"><i class="fa fa-plus"></i> Asignar Usuario</button>
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="form-control-label">Usuario de la Terminal</label>
@@ -53,9 +54,27 @@
                                 <combo-box bind="formTerminal.sede" label="Sedes" name="sede" route="Sedes/ReadById" required="true" ng-init="formTerminal.sede = ''"></combo-box>
                             </div>
                             <div class="form-group">
-                                <combo-box bind="formTerminal.tipo" label="Tipo de Registro" name="tipo" route="UsuariosTerminal/ReadTiposControl" required="true" ng-init="formTerminal.tipo = ''"></combo-box>
+                                <combo-box bind="formTerminal.tipo" label="Tipo de Registro" name="tipo" route="UsuariosTerminal/ReadTipoRegistro" required="true" ng-init="formTerminal.tipo = ''"></combo-box>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-lg-5" ng-show="usuarioTerminalCreated">
+                        <div class="box-body">
+                            <button class="btn btn-sm btn-info pull-right mb-3" ng-click="usuarioTerminalCreated = false"><i class="fa fa-plus"></i> Crear Usuario</button>
+                            <div class="form-group">
+                                <label class="form-control-label">Usuario de la Terminal</label>
+                                <select ng-model="formTerminal.idusuario" name="usuario" class="form-control" ng-init="formTerminal.idusuario = ''">
+                                    <option value="">Selecciona el usuario a asociar</option>
+                                    <option value="{{ items.id }}" ng-repeat="items in listUsuarioTerminal">{{ items.prop }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <combo-box bind="formTerminal.sede" label="Sedes" name="sede" route="Sedes/ReadById" required="true" ng-init="formTerminal.sede = ''"></combo-box>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary pull-right" ng-click="createFormulario()">Registrar</button>
+                            </div>
+                        </div>                        
                     </div>
                     <div class="col-lg-7">
                         <!-- mensaje de confirmacion -->
@@ -98,7 +117,7 @@
                                             <label class="custom-control-label" for="eps">EPS</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-md-12 mb-3" ng-hide="usuarioTerminalCreated">                                        
                                         <button type="submit" class="btn btn-primary pull-right" ng-click="createTerminal()" ng-if="formTerminal.idTerminal == 0" ng-disabled="formTerminal.confirm != formTerminal.passone || btnCreateTerminal != 'Registrar Terminal'">{{ btnCreateTerminal }}</button>
                                         <button type="submit" class="btn btn-primary pull-right" ng-click="updateTerminal()" ng-if="formTerminal.idTerminal != 0" ng-disabled="formTerminal.confirm != formTerminal.passone || btnUpdateTerminal != 'Actualizar Terminal'">{{ btnUpdateTerminal }}</button>
                                         <button type="reset" class="btn btn-default" ng-click="cancelCreateTerminal()">Cancelar</button>
@@ -111,6 +130,53 @@
             </form>
             <!-- end estado-tres : formulario -->
         </div>
+        <div class="card-body" ng-show="optionTerminal">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="<?php echo BASE_URL ?>Content/assets/img/mipersonal.png" alt="Image placeholder">
+                        <div class="card-body text-center">
+                            <h5 class="h2 card-title mb-0 text-center">Mi Personal</h5>
+                            <div class="col-xl-12">
+                                <small class="text-muted">Gestiona entrada y salida de tus empleados</small>
+                                <br>
+                                <button class="btn btn-sm btn-info mt-3" ng-click="showFormCreateTerminal(1)">Crear Terminal</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="<?php echo BASE_URL ?>Content/assets/img/visitantes.png" alt="Image placeholder">
+                        <div class="card-body text-center">
+                            <h5 class="h2 card-title mb-0">Mis Visitantes</h5>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <small class="text-muted">Gestiona entrada y salida de tus visitantes <?php echo Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['tipo_control']; ?></small>
+                                    <br>
+                                    <button class="btn btn-sm btn-info mt-3" ng-click="showFormCreateTerminal(2)">Crear Terminal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="<?php echo BASE_URL ?>Content/assets/img/contratistas.png" alt="Image placeholder">
+                        <div class="card-body text-center">
+                            <h5 class="h2 card-title mb-0 text-center">Mis Contratistas</h5>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <small class="text-muted">Gestiona entrada y salida de tus contratistas <?php echo Models\Usuario\ModelUsuario::checkTipoControl($id_sg_usuario)[0]['tipo_control']; ?></small>
+                                    <br>
+                                    <button class="btn btn-sm btn-info mt-3" ng-click="showFormCreateTerminal(3)">Crear Terminal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- estado-dos : con datos -->
     <div class="table-responsive" ng-hide="showGridTerminales">
@@ -119,15 +185,13 @@
                 <tr>
                     <th scope="col">Sede</th>
                     <th scope="col">Empresa</th>
-                    <th scope="col">Estado Terminal</th>
-                    <th scope="col">Mi Personal E/S</th>
-                    <th scope="col">Mis Visitantes E/S</th>
-                    <th scope="col">Mis Contratistas E/S</th>
+                    <th scope="col">Tipo Registro</th>
+                    <th scope="col">Estado Terminal</th>                    
                 </tr>
             </thead>
             <tbody class="list">
                 <tr ng-if="terminales.length == 0">
-                    <th scope="row" class="text-center" colspan="6">No hay terminales registradas</th>
+                    <th scope="row" class="text-center" colspan="7">No hay terminales registradas</th>
                 </tr>
                 <tr ng-repeat="rows in terminales | filter : searchTerminal">
                     <th scope="row">
@@ -144,17 +208,11 @@
                         {{ rows.nombre_empresa }}
                     </td>
                     <td>
-                        {{ (rows.id_sg_estado == 1) ? 'Activa' : 'Inactiva' }}
+                        <strong class="badge badge-{{rows.tipo_registro | setColorSigga }}">{{ rows.tipo_registro }}</strong>
                     </td>
                     <td>
-                        {{ rows.entrada_mi_personal }}
+                        <span class="badge badge-{{(rows.id_sg_estado == 1) ? 'success' : 'danger'}}">{{ (rows.id_sg_estado == 1) ? 'Activa' : 'Inactiva' }}</span>
                     </td>
-                    <td>
-                        {{ rows.entradas_visitantes }}
-                    </td>
-                    <td>
-                        {{ rows.entradas_contratistas }}
-                    </td>                    
                 </tr>
             </tbody>
         </table>

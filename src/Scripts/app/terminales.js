@@ -11,6 +11,9 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
     $scope.searchTerminal = '';
     $scope.idTerminal = 0;
     $scope.searchTerminal = '';
+    $scope.usuarioTerminalCreated = false;
+    $scope.listUsuarioTerminal = [];
+    $scope.usuariosTerminales = [];
 
     $scope.loadCreatedTerminals = function(){
         let promiseCreatedTerminals = $http.post(baseurl + 'UsuariosTerminal/ReadById', { uid : uid });
@@ -26,6 +29,30 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
         });
     }
 
+    $scope.loadUsuariosTerminales = function(){
+        Route.post('UsuariosTerminal/ReadUsuariosTerminales', {uid : uid}).then(response => {
+            if(response.data.status)
+            {
+                $scope.usuariosTerminales = response.data.rows;
+            }
+        })
+    }
+
+    $scope.loadUsuariosTerminales();
+
+    $scope.checkUsuarioTerminalCreated = function(){
+        Route.post('UsuariosTerminal/CheckUsuarioTerminal', { uid : uid }).then(response => {
+            if(response.data.status)
+            {
+                $scope.usuarioTerminalCreated = true;
+                $scope.listUsuarioTerminal = response.data.combo;
+            }            
+        });
+    }
+
+    $scope.checkUsuarioTerminalCreated();
+    
+
     $scope.loadCreatedTerminals();
 
     $scope.setForm = function(formTerminal){
@@ -35,8 +62,15 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
     $scope.showFormTerminal = false;
     $scope.statusCreatedTerminal = false;
     $scope.terminalMessage = '';
+    $scope.optionTerminal = false;
+
+    $scope.showFormOptionTerminal = function(){
+        $scope.showGridTerminales = true;
+        $scope.optionTerminal = true;
+    }
     
-    $scope.showFormCreateTerminal = function(){
+    $scope.showFormCreateTerminal = function(idTipo){
+        $scope.optionTerminal = false;
         $scope.showFormTerminal = true;
         $scope.showMessageEmpty = false;
         $scope.showGridTerminales = true;
@@ -53,7 +87,7 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
             passone         : "",
             photo           : false,
             sede            : "",
-            tipo            : "",
+            tipo            : idTipo.toString(),
             uid             : uid
         };
     }
@@ -87,6 +121,7 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
                     $scope.createdTerminal = true;
                     $scope.showGridTerminales = false;
                     $scope.loadCreatedTerminals();
+                    $scope.loadUsuariosTerminales();
 
                     $scope.formTerminal = {
                         idTerminal      : 0,
@@ -151,6 +186,7 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
             {
                 $scope.selectedRow = 0;
                 $scope.loadCreatedTerminals();
+                $scope.loadUsuariosTerminales();
             }
 
             $scope.btnDeleteTerminal = 'Si, Borralo';
@@ -165,6 +201,7 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
 
     $scope.selectRowEditTerminal = function(id){
         $scope.loadFormEdit = 'ellipsis-h';
+        $scope.optionTerminal = false;
 
         Route.post('UsuariosTerminal/ReadByEdit', { id : id}).then(response => {
             if(response.data.status)
@@ -210,5 +247,19 @@ app.controller('terminales', ['$scope', '$http', 'Core', 'Form', '$timeout', 'Ro
                 $scope.loadCreatedTerminals();
             }
         });
+    }
+
+    $scope.createFormulario = function(){
+        if($scope.formTerminal.idUsuario != "")
+        {
+            Route.post('UsuariosTerminal/CreateTerminal', $scope.formTerminal).then(response => {
+                if(response.data.status)
+                {
+                    $scope.showFormTerminal = false;
+                    $scope.showGridTerminales = false;
+                    $scope.loadCreatedTerminals();
+                }
+            });
+        }
     }
 }]);

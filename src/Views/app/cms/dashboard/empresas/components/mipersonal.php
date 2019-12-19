@@ -108,7 +108,7 @@
                             </div>
                             <p class="mt-3 mb-0 text-sm d-flex justify-content-left">
                                 <span class="text-wrap">Paquete: tienes <?php echo Models\Usuario\ModelUsuario::ObtenerPlanByEmpresa($userid)[0]['registros']; ?> actividades</span>
-                                <a href="javascript:" class="btn btn-sm btn-primary ml-2" ng-click="showPlanesData()">Más Planes</a>
+                                <!-- <a href="javascript:" class="btn btn-sm btn-primary ml-2" ng-click="showPlanesData()">Más Planes</a> -->
                             </p>
                         </div>
                     </div>

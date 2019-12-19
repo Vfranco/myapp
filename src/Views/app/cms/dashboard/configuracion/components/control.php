@@ -121,7 +121,7 @@
                 <tr ng-if="personalControl.length > 0" ng-repeat="rows in personalControl | filter : searchPersonalControl" ng-hide="selectedRowControl == rows.id_sg_personal_control">
                     <th scope="row">
                         <div class="media align-items-center">
-                            <a href="#" class="avatar mr-3">
+                            <a href="javascript:" class="avatar mr-3">
                                 <img alt="Image placeholder" src="<?php echo BASE_URL ?>Content/assets/img/control.png">
                             </a>
                             <div class="media-body">

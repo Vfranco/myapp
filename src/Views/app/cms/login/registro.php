@@ -191,6 +191,9 @@
                 <div class="col-xl-6">
                     <ul class="nav nav-footer justify-content-center justify-content-xl-end">
                         <li class="nav-item">
+							<a href="https://apps.co" class="nav-link font-weight-bold text-primary" target="_blank">Certificados Apps.co Ministerio de las TIC</a>
+						</li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link" target="_blank"><?php echo APP_TITLE . " " . CMS_VERSION; ?> beta</a>
                         </li>
                     </ul>

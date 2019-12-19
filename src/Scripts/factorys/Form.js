@@ -98,6 +98,7 @@ app.factory('Form', ['Core', '$http', function (Core, $http) {
         {
             for(let index in object)
             {
+                console.log(formObject[object[index]]);
                 if(typeof formObject[object[index]] == 'string')
                 {
                     if(Core.isEmpty(formObject[object[index]]))

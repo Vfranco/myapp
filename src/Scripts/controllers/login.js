@@ -4,6 +4,7 @@ sigga.controller('login', ['$scope', 'Core', 'Form', '$http', '$window', functio
     $scope.btnStatusLogin = false;
     $scope.messageError = '';
     $scope.btnStart = 'Ingresar';
+    $scope.cmsControl = false;    
 
     $scope.checkStorage = function()
     {

@@ -100,8 +100,8 @@
 									<div class="input-group input-group-alternative">
 										<div class="input-group-prepend">
 											<span class="input-group-text"><i class="ni ni-circle-08"></i></span>
-										</div>
-										<input ng-model="user" class="form-control required" name="userAcl" placeholder="Tu Correo Registrado" type="email" ng-disabled="btnStatusLogin">
+										</div>																				
+										<input ng-model="user" class="form-control required" name="userAcl" placeholder="{{ (cmsControl) ? 'Tu usuario de Control' : 'Tu correo registrado' }}" type="text" ng-disabled="btnStatusLogin">
 									</div>
 								</div>
 								<div class="form-group">
@@ -111,11 +111,11 @@
 										</div>
 										<input ng-model="pass" class="form-control required" name="passAcl" placeholder="Contraseña" type="password" ng-disabled="btnStatusLogin">
 									</div>
-								</div>
+								</div>								
 								<div class="custom-control custom-control-alternative custom-checkbox">
-									<input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-									<label class="custom-control-label" for=" customCheckLogin">
-										<span class="text-muted">Recordarme</span>
+									<input class="custom-control-input" id="cmsControl" type="checkbox" ng-checked="cmsControl" ng-model="cmsControl">
+									<label class="custom-control-label" for="cmsControl">
+										<span class="text-muted">CMS Control</span>
 									</label>
 								</div>
 								<div class="text-center">
@@ -142,13 +142,16 @@
 			<div class="row align-items-center justify-content-xl-between">
 				<div class="col-xl-6">
 					<div class="copyright text-center text-xl-left text-muted">
-						&copy; 2019 <a href="#" class="font-weight-bold ml-1" target="_blank">AREATIC S.A.S</a>
+						&copy; 2019 <a href="#" class="font-weight-bold ml-1 mb-2" target="_blank">AREATIC S.A.S</a>
 					</div>
 				</div>
 				<div class="col-xl-6">
 					<ul class="nav nav-footer justify-content-center justify-content-xl-end">
 						<li class="nav-item">
-							<a href="#" class="nav-link" target="_blank"><?php echo APP_TITLE . " " . CMS_VERSION; ?> beta</a>
+							<a href="https://apps.co" class="nav-link font-weight-bold text-primary" target="_blank">Certificados Apps.co Ministerio de las TIC</a>
+						</li>
+						<li class="nav-item">
+							<a href="javascript:" class="nav-link" target="_blank"><?php echo APP_TITLE . " " . CMS_VERSION; ?> beta</a>
 						</li>
 					</ul>
 				</div>

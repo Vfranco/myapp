@@ -8,7 +8,7 @@
   <meta name="description" content="SIGGA, Sistema de Control de Accesos">
   <meta name="author" content="AREATIC S.A.S">
   <meta name="theme-color" content="#6d118b">
-  <link rel="icon" type="image/png" href="favicon.ico"/>
+  <link rel="icon" type="image/png" href="/favicon.ico"/>
   <title><?php echo APP_TITLE; ?></title>
   <?php Core\Html::app('lib/angularjs/angular');?>
   <?php Core\Html::app('lib/angularjs/angular-animate.min');?>
@@ -18,9 +18,12 @@
   <?php Core\Html::app('lib/rxjs/rx.all');?>
   <?php Core\Html::app('lib/rxjs/rx.angular.min');?>
   <?php Core\Html::app('lib/rxjs/rx.dom');?>
-  <?php Core\Html::app('lib/moment/moment.min');?>
-  <?php Core\Html::app('lib/moment/moment.locale.min');?>  
-  <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">  
+  <?php Core\Html::app('lib/moment/moment.min');?>  
+  <?php Core\Html::app('lib/moment/moment.locale.min');?>
+  <?php Core\Html::app('lib/notifications/web-notification');?>
+  <?php Core\Html::app('lib/notifications/angular-web-notification');?>  
+  <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
   <?php Core\Html::app('lib/Crypto/base64');?>
@@ -39,6 +42,7 @@
     var uid = '<?php echo (!isset($_SESSION['sigga:usr'])) ? '' : $_SESSION['sigga:usr']; ?>';
     var baseurl = '<?php echo API_REST; ?>';
     var iduser = '' ;
+    var pathuid = '<?php echo (!isset($_GET['PATH'])) ? '' : explode('/', $_GET['PATH'])[2]; ?>';
     /** Sigga 1.0 beta */
     moment.locale('es');
   </script>

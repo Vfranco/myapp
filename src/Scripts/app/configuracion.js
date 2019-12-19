@@ -4,25 +4,40 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
     $scope.arl = [];
     $scope.personalControl = [];
     $scope.cargos = [];
+    $scope.actividades = [];
     $scope.formEps = {};
     $scope.formCargos = {};
+    $scope.formActividad = {};
     $scope.emptyFormEps = {};
     $scope.isEmptyEps = false;
     $scope.isEmptyArl = false;
     $scope.isEmptyCargo = false;
+    $scope.isEmptyActividad = false;
     $scope.uid = uid;
     $scope.editEps = '';
     $scope.editArl = '';
     $scope.editCargo = '';
+    $scope.editActividad = '';
     $scope.formEps.idEps = 0;
     $scope.formArl = {};
     $scope.formArl.idArl = 0;
     $scope.formCargos.idCargo = 0;
+    $scope.formActividad.idActividad = 0;
     $scope.formControl = {};    
     $scope.formControl.idControl = 0;
     $scope.isEmptyControl = false;
     $scope.searchPersonalControl = '';
     $scope.enableSearchPersonalControl = false;
+    $scope.searchCargo = '';
+    $scope.searchArl = '';
+    $scope.searchEps = '';
+    $scope.searchActividad = '';
+
+    $scope.setScroll = function(data)
+    {
+        if(data.length > 3)
+            return 'setScrollConfig';
+    }
 
     $scope.promiseDataServer = function(route, data)
     {
@@ -33,7 +48,7 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         if(response.data.status)
             $scope.eps = response.data.rows;
         else
-            $scope.eps = [];        
+            $scope.eps = [];
     });
 
     $scope.promiseDataServer('configuracion/readarl', { uid : uid }).then(response => {
@@ -57,8 +72,16 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
             $scope.cargos = [];
     });
 
+    Route.post('configuracion/readactividades', { uid : uid }).then(response => {
+        if(response.data.status)
+            $scope.actividades = response.data.rows;
+        else
+            $scope.actividades = [];
+    });
+
     $scope.muestraFormEps = false;
     $scope.muestraFormCargo = false;
+    $scope.muestraFormActividad = false;
 
     $scope.showFormEps = function(){
         $scope.editEps = '';
@@ -72,6 +95,12 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         $scope.muestraFormCargo = true;
     }
 
+    $scope.showFormActividad = function(){
+        $scope.editActividad = '';
+        $scope.formActividad.idActividad = 0;
+        $scope.muestraFormActividad = true;
+    }
+
     $scope.hideFormEps = function(){
         $scope.muestraFormEps = false;        
         $scope.formEps.nombreEps = '';
@@ -82,9 +111,15 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         $scope.formCargos.nombreCargo = '';
     }
 
+    $scope.hideFormActividad = function(){
+        $scope.muestraFormActividad = false;
+        $scope.formActividad.nombreActividad = '';
+    }
+
     $scope.showBusquedaEps = false;
     $scope.showBusquedaArl = false;
     $scope.showBusquedaCargo = false;
+    $scope.showBusquedaActividad = false;
 
     $scope.showPanelBusqueda = function(){
         $scope.showBusquedaEps = true;
@@ -101,6 +136,11 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         $scope.muestraFormCargo = false;
     }
 
+    $scope.showPanelBusquedaActividad = function(){
+        $scope.showBusquedaActividad = true;
+        $scope.muestraFormActividad = false;
+    }
+
     $scope.hidePanelBusqueda = function(){
         $scope.showBusquedaEps = false;
     }
@@ -111,6 +151,10 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
 
     $scope.hidePanelBusquedaCargo = function(){
         $scope.showBusquedaCargo = false;
+    }
+
+    $scope.hidePanelBusquedaActividad = function(){
+        $scope.showBusquedaActividad = false;
     }
 
     $scope.setForm = function(formEps){
@@ -243,8 +287,10 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
 
     $scope.seeOptionsArl = 0;
     $scope.seeOptionsCargo = 0;
+    $scope.seeOptionsActividad = 0;
     $scope.selectedRowArl = 0;
     $scope.selectedRowCargo = 0;
+    $scope.selectedRowActividad = 0;
     $scope.muestraFormArl = false;
 
     $scope.showFormArl = function(){
@@ -309,12 +355,20 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         $scope.seeOptionsCargo = id;
     }
 
+    $scope.showOptionsActividad = function(id){
+        $scope.seeOptionsActividad = id;
+    }
+
     $scope.selectRowDeleteArl = function(id){
         $scope.selectedRowArl = id;
     }
 
     $scope.selectRowDeleteCargo = function(id){
         $scope.selectedRowCargo = id;
+    }
+
+    $scope.selectRowDeleteActividad = function(id){
+        $scope.selectedRowActividad = id;
     }
 
     $scope.selectRowEditArl = function(id, nombreArl){
@@ -327,6 +381,12 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         $scope.muestraFormCargo = true;
         $scope.formCargos.idCargo = id;
         $scope.editCargo = nombreCargo;
+    }
+
+    $scope.selectRowEditActividad = function(id, nombreActividad){
+        $scope.muestraFormActividad = true;
+        $scope.formActividad.idActividad = id;
+        $scope.editActividad = nombreActividad;
     }
 
     $scope.deleteArl = function(id){
@@ -349,6 +409,10 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
 
     $scope.cancelDeleteCargo = function(){
         $scope.selectedRowCargo = 0;
+    }
+
+    $scope.cancelDeleteActividad = function(){
+        $scope.selectedRowActividad = 0;
     }
 
     $scope.updateArl = function(){
@@ -519,6 +583,7 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
     }
 
     $scope.btnDeleteCargo = 'Si, Borralo';
+    $scope.btnDeleteActividad = 'Si, Borralo'    ;
 
     $scope.deleteCargo = function(idcargo){
 
@@ -668,5 +733,110 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
         }
     }
 
+    $scope.createActividad = function(){
 
+        if(Form.checkFormObject($scope.formActividad))
+        {
+            $scope.message = 'Por favor, ingresa el nombre de la Actividad que deseas registrar';
+            $scope.type = 'danger';
+            $scope.isEmptyActividad = true;
+
+            $timeout(() => {
+                $scope.isEmptyActividad = false;
+                $scope.hideFormCargo();
+            }, 3500);
+        }
+        else
+        {
+            $scope.promiseDataServer('configuracion/createactividad', $scope.formActividad).then(response => {
+                if(response.data.status)
+                {
+                    $scope.message = response.data.message;
+                    $scope.type = 'success';
+                    $scope.isEmptyActividad = true;
+                    $scope.formActividad.nombreActividad = '';
+
+                    Route.post('configuracion/readactividades', { uid : uid }).then(response => {
+                        if(response.data.status)
+                            $scope.actividades = response.data.rows;
+                        else
+                            $scope.actividades = [];                            
+                    });
+                }
+                else
+                {
+                    $scope.message = response.data.message;
+                    $scope.type = 'danger';
+                    $scope.isEmptyActividad = true;
+                }
+            });
+
+            $timeout(() => {
+                $scope.isEmptyActividad = false;
+                $scope.hideFormActividad();
+            }, 2500);
+        }
+    }
+
+    $scope.updateActividad = function(){
+        if(Form.checkFormObject($scope.formActividad))
+        {
+            $scope.message = 'Por favor, este campo no puede estar vacio';
+            $scope.type = 'danger';
+            $scope.isEmptyActividad = true;
+
+            $timeout(() => {
+                $scope.isEmptyActividad = false;
+                $scope.hideFormActividad();
+            }, 2000);
+        }
+        else
+        {
+            Route.post('configuracion/updateactividad', $scope.formActividad).then(response => {
+
+                if(response.data.status)
+                {
+                    $scope.message = response.data.message;
+                    $scope.type = 'success';
+                    $scope.isEmptyActividad = true;
+                    $scope.formActividad.nombreActividad = '';
+
+                    $scope.promiseDataServer('configuracion/readactividades', { uid : uid }).then(response => {
+                        if(response.data.status)
+                            $scope.actividades = response.data.rows;
+                        else
+                            $scope.actividades = [];
+                    }); 
+
+                    $scope.isEmptyActividad = false;
+                    $scope.hideFormActividad();
+                }
+                else
+                {
+                    $scope.message = response.data.message;
+                    $scope.type = 'danger';
+                    $scope.isEmptyActividad = true;
+                }
+            });
+        }
+    }
+
+    $scope.deleteActividad = function(idactividad){
+
+        $scope.btnDeleteActividad = 'Eliminando ...';
+
+        Route.post('configuracion/deleteactividad', { idactividad : idactividad }).then(response => {
+            if(response.data.status)
+            {
+                $scope.promiseDataServer('configuracion/readactividades', { uid : uid }).then(response => {
+                    if(response.data.status)
+                        $scope.actividades = response.data.rows;
+                    else
+                        $scope.actividades = [];
+                });
+            }
+
+            $scope.btnDeleteActividad = 'Si, Borralo';
+        });
+    }
 }]);
