@@ -771,6 +771,8 @@ app.controller('configuracion', ['$scope', 'Core', 'Form', '$http', '$timeout', 
                 }
             });
 
+            $scope.selectedRowActividad = 0;
+
             $timeout(() => {
                 $scope.isEmptyActividad = false;
                 $scope.hideFormActividad();

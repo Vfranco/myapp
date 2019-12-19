@@ -1,7 +1,7 @@
 app.factory('Socket', ['$rootScope', function ($rootScope) {
 
-    //var server = 'http://nodejs.sigga.com.co/';
-    var server = 'http://localhost:3000/';
+    var server = 'http://nodejs.sigga.com.co/';
+    //var server = 'http://localhost:3000/';
     var socket = io.connect(server);
 
     return {
